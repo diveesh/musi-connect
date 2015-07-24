@@ -1,0 +1,38 @@
+<% if session[:curr_user_id] != nil %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
+      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
+      <li class="active"><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
+      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
+    </ul>
+<% end %>
+<%= form_for @user, url: "update_profile", method: :update do |f| %>
+    <p> Affiliation: 
+    <%= f.collection_select :level_anchor, User::AFFILIATIONS, :to_s, :to_s, 
+       :include_blank => false, :selected => @user.affiliation %> </p>
+    <p>Instruments:</p>
+    <% @instruments.each do |ins| %>
+        <p><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins) %>
+        <%= f.label ins.name %></p>
+    <% end %>
+    <br />
+    <p>Genres:</p>
+    <% @genres.each do |g| %>
+        <p><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
+        <%= f.label g.name %></p>
+    <% end %>
+    <p> Select Level: 
+    <%= f.collection_select :level_anchor, User::LEVEL_ANCHORS, :to_s, :to_s, 
+       :include_blank => false, :selected => @user.level_anchor %> </p>
+    <p>Interested in?</p>
+    <% @interests.each do |i| %>
+        <p><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+        <%= f.label i.name %></p>
+    <% end %>
+    <p>Activities you would like to do:</p>
+    <% @activities.each do |a| %>
+        <p><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+        <%= f.label a.name %></p>
+    <% end %>
+    <%= f.submit %>
+<% end %>

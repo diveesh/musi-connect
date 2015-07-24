@@ -1,0 +1,40 @@
+<% content_for :title, "Lookup users" %>
+<% content_for :stylesheet, (stylesheet_link_tag "search") %>
+<% if session[:curr_user_id] != nil %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><%= link_to('Search', controller: "search", action: "lookup") %></li>
+      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
+      <li><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
+      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
+    </ul>
+<% end %>
+<h2>Enter your search criteria</h2>
+<%= form_for :search, url: "display_results", method: :post do |f| %>
+    <% User::AFFILIATIONS.each do |aff|%>
+        <p><%= check_box_tag "affiliations[]", aff %>
+        <%= f.label aff %></p>
+    <% end %>
+    <p>Instruments:</p>
+    <% @instruments.each do |ins| %>
+        <p><%= check_box_tag "instruments[]", ins.id %>
+        <%= f.label ins.name %></p>
+    <% end %>
+    <br />
+    <p>Genres:</p>
+    <% @genres.each do |g| %>
+        <p><%= check_box_tag "genres[]", g.id %>
+        <%= f.label g.name %></p>
+    <% end %>
+    <p> What level of experience?</p> 
+    <% User::LEVEL_ANCHORS.each do |anchor|%>
+        <p><%= check_box_tag "level_anchors[]", anchor %>
+        <%= f.label anchor %></p>
+    <% end %>
+
+    <p>Activities:</p>
+    <% @activities.each do |a| %>
+        <p><%= check_box_tag "activities[]", a.id %>
+        <%= f.label a.name %></p>
+    <% end %>
+    <%= f.submit "Find musicians!" %>
+<% end %>

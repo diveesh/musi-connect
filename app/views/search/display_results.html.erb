@@ -1,0 +1,14 @@
+<% content_for :title, "Display users" %>
+<% content_for :stylesheet, (stylesheet_link_tag "search") %>
+<% if session[:curr_user_id] != nil %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><%= link_to('Search', controller: "search", action: "lookup") %></li>
+      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
+      <li><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
+      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
+    </ul>
+<% end %>
+<% @users.each do |user| %>
+    <% name = user.first_name + " " + user.last_name %>
+    <p><%= link_to(name, controller: "users", action: "display_profile", id: user.id) %></p>
+<% end %>

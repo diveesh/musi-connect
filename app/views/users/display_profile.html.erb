@@ -1,0 +1,29 @@
+<% content_for :title, "Users" %>
+<% content_for :stylesheet, (stylesheet_link_tag "users") %>
+<% if session[:curr_user_id] != nil %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
+      <% if @id == nil %>
+        <li class="active"><%= link_to('My Profile', controller: "users", action: "display_profile", id: session[:curr_user_id]) %></li>
+      <% else %>
+        <li><%= link_to('My Profile', controller: "users", action: "display_profile", id: session[:curr_user_id]) %></li>
+      <% end %>
+      <li><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
+      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
+    </ul>
+<% end %>
+<% name = @user.first_name + " " + @user.last_name %>
+<h2><%= name %></h2>
+<% @user.instruments.each do |instrument|%>
+    <p><%= instrument.name %></p>
+<% end %>
+<% @user.genres.each do |genre|%>
+    <p><%= genre.name %></p>
+<% end %>
+<% @user.activities.each do |activity| %>
+    <p><%= activity.name %></p>
+<% end %>
+<% @user.interests.each do |interest|%>
+    <p><%= interest.name %></p>
+<% end %>
+<p><%= @user.level_anchor %></p>

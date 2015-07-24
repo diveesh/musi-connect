@@ -1,0 +1,33 @@
+<% content_for :title, "Setup profile" %>
+<% content_for :stylesheet, (stylesheet_link_tag "users") %>
+
+<%= form_for @user, url: "update_profile", method: :update do |f| %>
+    <p> Affiliation: 
+    <%= f.collection_select :level_anchor, User::AFFILIATIONS, :to_s, :to_s, 
+       :include_blank => false %> </p>
+    <p>Instruments:</p>
+    <% @instruments.each do |ins| %>
+        <p><%= check_box_tag "instruments[]", ins.id %>
+        <%= f.label ins.name %></p>
+    <% end %>
+    <br />
+    <p>Genres:</p>
+    <% @genres.each do |g| %>
+        <p><%= check_box_tag "genres[]", g.id %>
+        <%= f.label g.name %></p>
+    <% end %>
+    <p> Select Level: 
+    <%= f.collection_select :level_anchor, User::LEVEL_ANCHORS, :to_s, :to_s, 
+       :include_blank => false %> </p>
+    <p>Interested in?</p>
+    <% @interests.each do |i| %>
+        <p><%= check_box_tag "interests[]", i.id %>
+        <%= f.label i.name %></p>
+    <% end %>
+    <p>Activities you would like to do:</p>
+    <% @activities.each do |a| %>
+        <p><%= check_box_tag "activities[]", a.id %>
+        <%= f.label a.name %></p>
+    <% end %>
+    <%= f.submit %>
+<% end %>

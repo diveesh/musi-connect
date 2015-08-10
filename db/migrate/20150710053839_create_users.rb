@@ -7,10 +7,11 @@ class CreateUsers < ActiveRecord::Migration
         t.column :level_anchor, :string
         t.column :email_address, :string
         t.column :affiliation, :string
-        t.column :statement, :string
+        t.column :photo_file_name, :string
         t.column :password_digest, :string
         t.column :salt, :string
         t.column :profile_set, :boolean
+        t.column :description, :string
       t.timestamps
     end
   end

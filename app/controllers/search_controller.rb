@@ -11,6 +11,7 @@ class SearchController < ApplicationController
 
     def display_results
         if session[:curr_user_id] != nil
+            flash[:error_messages] = []
             @users = User.all.to_set - Set.new.add(User.find(session[:curr_user_id]))
             if params[:instruments] != nil
                 @users = @users & User.joins(:instruments).where("instruments.id" => params[:instruments]).to_set
@@ -26,6 +27,9 @@ class SearchController < ApplicationController
             end
             if params[:level_anchors] != nil
                 @users = @users & User.where("level_anchor" => params[:level_anchors])
+            end
+            if @users.size() == 0
+                flash[:error_messages] << "Your search yielded no results. Try broadening your query."
             end
         else
             redirect_to({controller: "users", action: "login"})

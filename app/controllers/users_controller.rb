@@ -21,14 +21,6 @@ class UsersController < ApplicationController
         end
     end
 
-    def index
-        if session[:curr_user_id] != nil
-            redirect_to({action: "display_profile"})
-        else
-            redirect_to({action: "login"})
-        end
-    end
-
     def display_profile
         if params[:id] != nil
             @id = params[:id]
@@ -39,9 +31,7 @@ class UsersController < ApplicationController
             else
                 redirect_to ({action: "login"})
             end
-        end
-            
-            
+        end     
     end
 
     def logout
@@ -83,24 +73,60 @@ class UsersController < ApplicationController
     def update_profile
         user = User.find(session[:curr_user_id])
         if params[:instruments] != nil
+            user.instruments = Array.new
             params[:instruments].each do |id|
                 user.instruments << Instrument.find(id)
             end
         end
         
         if params[:genres] != nil
+            user.genres = Array.new
             params[:genres].each do |id|
                 user.genres << Genre.find(id)
+            end
+        end
+
+        if params[:interests] != nil
+            user.interests = Array.new
+            params[:interests].each do |id|
+                user.interests << Interest.find(id)
+            end
+        end
+
+        if params[:activities] != nil
+            user.activities = Array.new
+            params[:activities].each do |id|
+                user.activities << Activity.find(id)
             end
         end
         
         user.level_anchor = params[:user][:level_anchor]
         user.profile_set = true
+        photo = params[:user][:picture]
+        #puts photo
+        if photo != nil
+            File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename), 'wb') do |file|
+                file.write(photo.read)
+            end
+            user.photo_file_name = photo.original_filename
+            
+        end
+        desc = params[:user][:description]
+        if desc != nil
+            user.description = desc
+        end
+        puts user.photo_file_name
         user.save()
-        redirect_to({action: "index"})
+        redirect_to({action: "display_profile"})
+    end
+
+    def failure
     end
 
     def create
+        # auth_hash = request.env['omniauth.auth']
+ 
+        # render :text => auth_hash.inspect
         existing_user = User.find_by_login_name(params[:login_id])
         if existing_user == nil
             new_user = User.new()
@@ -118,7 +144,7 @@ class UsersController < ApplicationController
             else
                 flash[:error_messages] = nil
                 session[:curr_user_id] = new_user.id
-                redirect_to ({action: "setup"})  
+                redirect_to ({action: "edit_profile"})  
             end      
         else
             flash[:err] = "That login name has already been taken. Please choose another one"

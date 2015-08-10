@@ -4,10 +4,14 @@ class User < ActiveRecord::Base
     has_and_belongs_to_many :interests
     has_and_belongs_to_many :activities
 
-    validates_confirmation_of :password
+    # validates_confirmation_of :password
+
+    has_secure_password
+
+    validates :password, length: { minimum: 8 }, allow_nil: true
     validates_format_of :email_address, :with => /@/
 
-    LEVEL_ANCHORS = ['Beginning', 'Amateur', 'Intermediate', 'Advanced', 'Expert']
+    LEVEL_ANCHORS = ['Beginner', 'Novice', 'Fair', 'Good', 'Excellent']
     AFFILIATIONS = ['AFFIL 1', 'AFFIL 2', 'AFFIL 3']
 
 

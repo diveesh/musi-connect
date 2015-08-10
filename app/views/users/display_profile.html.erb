@@ -1,4 +1,4 @@
-<% content_for :title, "Users" %>
+<% content_for :title, "Display Profile" %>
 <% content_for :stylesheet, (stylesheet_link_tag "users") %>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
@@ -13,7 +13,9 @@
     </ul>
 <% end %>
 <% name = @user.first_name + " " + @user.last_name %>
-<h2><%= name %></h2>
+<h2><%= ERB::Util::html_escape(name) %></h2>
+<% photo_file_name = @user.photo_file_name == nil ? "/assets/default.png" : @user.photo_file_name %>
+<%= image_tag(photo_file_name, size: "350") %>
 <% @user.instruments.each do |instrument|%>
     <p><%= instrument.name %></p>
 <% end %>
@@ -27,3 +29,4 @@
     <p><%= interest.name %></p>
 <% end %>
 <p><%= @user.level_anchor %></p>
+<p><%= @user.description %></p>

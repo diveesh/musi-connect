@@ -1,3 +1,5 @@
+<% content_for :title, "Edit Profile" %>
+<% content_for :stylesheet, (stylesheet_link_tag "users") %>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
@@ -34,5 +36,8 @@
         <p><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
         <%= f.label a.name %></p>
     <% end %>
+    <p>Anything else you want to tell us?</p>
+    <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
+    <p>Add a picture of yourself!<%= f.file_field :picture %></p>
     <%= f.submit %>
 <% end %>

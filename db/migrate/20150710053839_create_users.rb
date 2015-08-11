@@ -10,7 +10,6 @@ class CreateUsers < ActiveRecord::Migration
         t.column :photo_file_name, :string
         t.column :password_digest, :string
         t.column :salt, :string
-        t.column :profile_set, :boolean
         t.column :description, :string
       t.timestamps
     end

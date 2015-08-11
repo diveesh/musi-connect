@@ -71,7 +71,7 @@ class LoadData < ActiveRecord::Migration
 
         
 
-        ds = User.new(:first_name => "Diveesh", :last_name => "Singh", :login_name => "diveesh", :level_anchor => "Expert", :profile_set => false, :affiliation => "AFFIL 2")
+        ds = User.new(:first_name => "Diveesh", :last_name => "Singh", :login_name => "diveesh", :level_anchor => "Expert",  :affiliation => "AFFIL 2", :email_address => "diveesh@gmail.com")
         ds.instruments << alto_sax
         ds.instruments << piano
         ds.genres << jazz
@@ -79,21 +79,21 @@ class LoadData < ActiveRecord::Migration
         ds.activities << chamber_music
         ds.password = "test"
         ds.save(:validate => false)
-        jb = User.new(:first_name => "Justin", :last_name => "Bieber", :login_name => "bieber", :level_anchor => "Intermediate", :profile_set => false)
+        jb = User.new(:first_name => "Justin", :last_name => "Bieber", :login_name => "bieber", :level_anchor => "Intermediate", :email_address => "bieber@gmail.com")
         jb.instruments << clar
         jb.genres << pop
         jb.activities << orchestra
         jb.password = "test"
         jb.save(:validate => false)
-        ph = User.new(:first_name => "Paris",  :last_name => "Hilton", :login_name => "hilton", :level_anchor => "Expert", :profile_set => false)
+        ph = User.new(:first_name => "Paris",  :last_name => "Hilton", :login_name => "hilton", :level_anchor => "Expert", :email_address => "hilton@gmail.com")
         ph.password = "test"
         ph.save(:validate => false)
-        mc = User.new(:first_name => "Miley",  :last_name => "Cyrus", :login_name => "cyrus", :level_anchor => "Beginner", :profile_set => false)
+        mc = User.new(:first_name => "Miley",  :last_name => "Cyrus", :login_name => "cyrus", :level_anchor => "Beginner", :email_address => "cyrus@gmail.com")
         mc.instruments << clar
         mc.instruments << piano
         mc.password = "test"
         mc.save(:validate => false)
-        bo = User.new(:first_name => "Barack", :last_name => "Obama", :login_name =>  "obama", :level_anchor => "Expert", :profile_set => false)
+        bo = User.new(:first_name => "Barack", :last_name => "Obama", :login_name =>  "obama", :level_anchor => "Expert", :email_address => "obama@gmail.com")
         bo.genres << rock
         bo.password = "test"
         bo.save(:validate => false)

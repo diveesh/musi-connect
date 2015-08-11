@@ -57,14 +57,10 @@ class UsersController < ApplicationController
     def setup
         if session[:curr_user_id] != nil
             @user = User.find(session[:curr_user_id])
-            if @user.profile_set
-                redirect_to({action: "edit_profile"})
-            else
-                @instruments = Instrument.all
-                @genres = Genre.all
-                @interests = Interest.all
-                @activities = Activity.all
-            end
+            @instruments = Instrument.all
+            @genres = Genre.all
+            @interests = Interest.all
+            @activities = Activity.all
         else
             redirect_to ({action: "login"})
         end
@@ -101,7 +97,6 @@ class UsersController < ApplicationController
         end
         
         user.level_anchor = params[:user][:level_anchor]
-        user.profile_set = true
         photo = params[:user][:picture]
         #puts photo
         if photo != nil
@@ -116,7 +111,9 @@ class UsersController < ApplicationController
             user.description = desc
         end
         puts user.photo_file_name
-        user.save()
+        if !user.save()
+            puts user.errors.full_messages
+        end
         redirect_to({action: "display_profile"})
     end
 
@@ -135,7 +132,6 @@ class UsersController < ApplicationController
             new_user.login_name = params[:login_id]
             new_user.password = params[:password]
             new_user.password_confirmation = params[:confirm_password]
-            new_user.profile_set = false
             new_user.level_anchor = nil
             new_user.email_address = params[:email_address]
             if !new_user.save()

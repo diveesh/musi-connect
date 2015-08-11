@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20150717012802) do
     t.string   "photo_file_name"
     t.string   "password_digest"
     t.string   "salt"
-    t.boolean  "profile_set"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -44,7 +44,7 @@
     <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
     <br/>
     <div>Add a picture of yourself!</div>
-    <div id="photo_section"><img id="profile_picture" src='/assets/<%= @user.photo_file_name %>' alt="your image" /></div>
+    <div id="photo_section"><img id="profile_picture" src=<%= @user.photo_file_name == nil ? '/assets/default.png' : '/assets/' + @user.photo_file_name %> alt="your image" /></div>
     <div><%= f.file_field :picture %></div>
     <%= javascript_tag "
         function readURL(input) {

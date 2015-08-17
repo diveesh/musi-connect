@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get ':controller(/:action(/:id))'
   post ':controller(/:action(/:id))'
+
+  mount Uploader::Engine => '/uploader'
   # get '/login', :to => 'users#login'
 
   # get '/search', :to => 'search#lookup', :as => :search

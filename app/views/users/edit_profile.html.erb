@@ -12,32 +12,57 @@
     <p> Affiliation: 
     <%= f.collection_select :level_anchor, User::AFFILIATIONS, :to_s, :to_s, 
        :include_blank => false, :selected => @user.affiliation %> </p>
-    <p>Instruments:</p>
+    <div>Instruments:</div>
     <% @instruments.each do |ins| %>
-        <p><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins) %>
-        <%= f.label ins.name %></p>
+        <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins) %>
+        <%= f.label ins.name %></div>
     <% end %>
     <br />
-    <p>Genres:</p>
+    <div>Genres:</div>
     <% @genres.each do |g| %>
-        <p><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
-        <%= f.label g.name %></p>
+        <div><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
+        <%= f.label g.name %></div>
     <% end %>
-    <p> Select Level: 
+    <br/>
+    <div> Select Level: 
     <%= f.collection_select :level_anchor, User::LEVEL_ANCHORS, :to_s, :to_s, 
-       :include_blank => false, :selected => @user.level_anchor %> </p>
-    <p>Interested in?</p>
+       :include_blank => false, :selected => @user.level_anchor %> </div>
+    <br/>
+    <div>Interested in?</div>
     <% @interests.each do |i| %>
-        <p><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
-        <%= f.label i.name %></p>
+        <div><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+        <%= f.label i.name %></div>
     <% end %>
-    <p>Activities you would like to do:</p>
+    <br/>
+    <div>Activities you would like to do:</div>
     <% @activities.each do |a| %>
-        <p><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
-        <%= f.label a.name %></p>
+        <div><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+        <%= f.label a.name %></div>
     <% end %>
-    <p>Anything else you want to tell us?</p>
+    <br/>
+    <div>Anything else you want to tell us?</div>
     <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
-    <p>Add a picture of yourself!<%= f.file_field :picture %></p>
-    <%= f.submit %>
+    <br/>
+    <div>Add a picture of yourself!</div>
+    <div id="photo_section"><img id="profile_picture" src='/assets/<%= @user.photo_file_name %>' alt="your image" /></div>
+    <div><%= f.file_field :picture %></div>
+    <%= javascript_tag "
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#profile_picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#user_picture').change(function(){
+            readURL(this);
+        });
+    "%>
+    <%= f.submit "Update Profile"%>
 <% end %>

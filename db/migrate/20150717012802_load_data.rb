@@ -54,38 +54,46 @@ class LoadData < ActiveRecord::Migration
         pop.save(:validate => false)
 
 
-        organize = Interest.new(:name => "Organize/produce an event")
+        organize = Activity.new(:name => "Organize/produce an event")
         organize.save(:validate => false)
-        design = Interest.new(:name => "Help design a poster")
+        design = Activity.new(:name => "Help design a poster")
         design.save(:validate => false)
-        develop = Interest.new(:name => "Help develop a website")
+        develop = Activity.new(:name => "Help develop a website")
         develop.save(:validate => false)
+        house_concert = Activity.new(:name => "Host a house concert")
+        house_concert.save(:validate => false)
+        help_with_concert = Activity.new(:name => "Help with Fall and Winter Concert on Campus")
+        help_with_concert.save(:validate => false)
+        help_produce_marketing = Activity.new(:name => "Help produce marketing materials")
+        help_produce_marketing.save(:validate => false)
+        donate_funds = Activity.new(:name => "Donate funds")
+        donate_funds.save(:validate => false)
 
-
-        chamber_music = Activity.new(:name => "Read chamber music")
+        chamber_music = Interest.new(:name => "Read chamber music")
         chamber_music.save(:validate => false)
-        form_chamber_group = Activity.new(:name => "Forming a chamber group")
+        form_chamber_group = Interest.new(:name => "Forming a chamber group")
         form_chamber_group.save(:validate => false)
-        orchestra = Activity.new(:name => "Playing in an orchestra")
+        orchestra = Interest.new(:name => "Playing in an orchestra")
         orchestra.save(:validate => false)
-
+        jazz_combo = Interest.new(:name => "Forming a jazz combo")
+        jazz_combo.save(:validate => false)
         
 
-        ds = User.new(:first_name => "Diveesh", :last_name => "Singh", :login_name => "diveesh", :level_anchor => "Expert",  :affiliation => "AFFIL 2", :email_address => "diveesh@gmail.com")
+        ds = User.new(:first_name => "Diveesh", :last_name => "Singh", :login_name => "diveesh", :level_anchor => "Excellent",  :affiliation => "AFFIL 2", :email_address => "diveesh@gmail.com")
         ds.instruments << alto_sax
         ds.instruments << piano
         ds.genres << jazz
-        ds.interests << organize
-        ds.activities << chamber_music
+        ds.activities << organize
+        ds.interests << chamber_music
         ds.password = "test"
         ds.save(:validate => false)
-        jb = User.new(:first_name => "Justin", :last_name => "Bieber", :login_name => "bieber", :level_anchor => "Intermediate", :email_address => "bieber@gmail.com")
+        jb = User.new(:first_name => "Justin", :last_name => "Bieber", :login_name => "bieber", :level_anchor => "Fair", :email_address => "bieber@gmail.com")
         jb.instruments << clar
         jb.genres << pop
-        jb.activities << orchestra
+        jb.interests << orchestra
         jb.password = "test"
         jb.save(:validate => false)
-        ph = User.new(:first_name => "Paris",  :last_name => "Hilton", :login_name => "hilton", :level_anchor => "Expert", :email_address => "hilton@gmail.com")
+        ph = User.new(:first_name => "Paris",  :last_name => "Hilton", :login_name => "hilton", :level_anchor => "Excellent", :email_address => "hilton@gmail.com")
         ph.password = "test"
         ph.save(:validate => false)
         mc = User.new(:first_name => "Miley",  :last_name => "Cyrus", :login_name => "cyrus", :level_anchor => "Beginner", :email_address => "cyrus@gmail.com")
@@ -93,7 +101,7 @@ class LoadData < ActiveRecord::Migration
         mc.instruments << piano
         mc.password = "test"
         mc.save(:validate => false)
-        bo = User.new(:first_name => "Barack", :last_name => "Obama", :login_name =>  "obama", :level_anchor => "Expert", :email_address => "obama@gmail.com")
+        bo = User.new(:first_name => "Barack", :last_name => "Obama", :login_name =>  "obama", :level_anchor => "Novice", :email_address => "obama@gmail.com")
         bo.genres << rock
         bo.password = "test"
         bo.save(:validate => false)

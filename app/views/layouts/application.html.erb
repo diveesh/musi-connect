@@ -4,6 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>      
       <%= stylesheet_link_tag 'application', media: 'all' %>
+      
+        <%= javascript_include_tag "jquery" %>
       <title><%= yield :title %></title>
       <%= yield :stylesheet %>
       <%= csrf_meta_tags %>

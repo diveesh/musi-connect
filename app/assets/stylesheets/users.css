@@ -1,1 +1,8 @@
+#photo_section {
+    height: 350px;
+}
 
+#profile_picture {
+    max-height: 100%;
+    max-width: 100%;
+}

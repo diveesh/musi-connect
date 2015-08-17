@@ -1,5 +1,7 @@
 <% content_for :title, "Display Profile" %>
 <% content_for :stylesheet, (stylesheet_link_tag "users") %>
+<%= javascript_include_tag "searcher" %>
+<%= javascript_include_tag "photoHelper" %>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
@@ -15,18 +17,35 @@
 <% name = @user.first_name + " " + @user.last_name %>
 <h2><%= ERB::Util::html_escape(name) %></h2>
 <% photo_file_name = @user.photo_file_name == nil ? "/assets/default.png" : @user.photo_file_name %>
-<%= image_tag(photo_file_name, size: "350") %>
+<div id="photo_section"></div>
+<%= javascript_tag "
+  var photoHelp = new PhotoHelper();
+"%>
+<%= javascript_tag "
+var callback = function(user) {
+  var file_name = user.photo_file_name == null ? 'default.png' : user.photo_file_name;
+  var newImg = document.createElement('img');
+  newImg.src = '/assets/' + file_name;
+  newImg.setAttribute('id', 'profile_picture');
+  document.getElementById('photo_section').appendChild(newImg);
+}
+"%>
+<%= javascript_tag "
+  var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
+  searcher.search();
+"%>
+<br/>
 <% @user.instruments.each do |instrument|%>
-    <p><%= instrument.name %></p>
+    <div><%= instrument.name %></div>
 <% end %>
 <% @user.genres.each do |genre|%>
-    <p><%= genre.name %></p>
+    <div><%= genre.name %></div>
 <% end %>
 <% @user.activities.each do |activity| %>
-    <p><%= activity.name %></p>
+    <div><%= activity.name %></div>
 <% end %>
 <% @user.interests.each do |interest|%>
-    <p><%= interest.name %></p>
+    <div><%= interest.name %></div>
 <% end %>
-<p><%= @user.level_anchor %></p>
-<p><%= @user.description %></p>
+<div><%= @user.level_anchor %></div>
+<div><%= ERB::Util::html_escape(@user.description) %></div>

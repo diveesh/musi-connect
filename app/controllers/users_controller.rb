@@ -112,9 +112,13 @@ class UsersController < ApplicationController
         end
         puts user.photo_file_name
         if !user.save()
-            puts user.errors.full_messages
+            flash[:error_messages] = user.errors.full_messages
+            redirect_to({action: "edit_profile"})
+        else
+            flash[:error_messages] = nil
+            redirect_to({action: "display_profile"})
         end
-        redirect_to({action: "display_profile"})
+        
     end
 
     def failure
@@ -145,6 +149,13 @@ class UsersController < ApplicationController
         else
             flash[:err] = "That login name has already been taken. Please choose another one"
             redirect_to({action: "new"})
+        end
+    end
+
+    def get_picture
+        if params[:id] != nil
+            @user = User.find(params[:id])
+            render :json => @user
         end
     end
 end

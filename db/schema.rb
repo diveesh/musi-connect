@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717012802) do
+ActiveRecord::Schema.define(version: 20150818054204) do
 
   create_table "activities", force: true do |t|
     t.string   "name"
@@ -41,19 +41,19 @@ ActiveRecord::Schema.define(version: 20150717012802) do
   add_index "genres_users", ["genre_id"], name: "index_genres_users_on_genre_id"
   add_index "genres_users", ["user_id"], name: "index_genres_users_on_user_id"
 
+  create_table "instrument_skills", force: true do |t|
+    t.integer  "instrument_id"
+    t.integer  "user_id"
+    t.string   "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "instruments", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "instruments_users", id: false, force: true do |t|
-    t.integer "instrument_id"
-    t.integer "user_id"
-  end
-
-  add_index "instruments_users", ["instrument_id"], name: "index_instruments_users_on_instrument_id"
-  add_index "instruments_users", ["user_id"], name: "index_instruments_users_on_user_id"
 
   create_table "interests", force: true do |t|
     t.string   "name"
@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 20150717012802) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "login_name"
-    t.string   "level_anchor"
     t.string   "email_address"
     t.string   "affiliation"
     t.string   "photo_file_name"

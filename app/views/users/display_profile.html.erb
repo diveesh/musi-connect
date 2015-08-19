@@ -35,6 +35,7 @@ var callback = function(user) {
   searcher.search();
 "%>
 <br/>
+<div><%= @user.affiliation %></div>
 <% @user.instruments.each do |instrument|%>
     <div><%= instrument.name %></div>
 <% end %>
@@ -47,5 +48,4 @@ var callback = function(user) {
 <% @user.interests.each do |interest|%>
     <div><%= interest.name %></div>
 <% end %>
-<div><%= @user.level_anchor %></div>
 <div><%= ERB::Util::html_escape(@user.description) %></div>

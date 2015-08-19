@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_and_belongs_to_many :genres
-    has_and_belongs_to_many :instruments
+    has_many :instrument_skills
+    has_many :instruments, through: :instrument_skills
     has_and_belongs_to_many :interests
     has_and_belongs_to_many :activities
 
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
     validates :password, length: { minimum: 8 }, allow_nil: true
     validates_format_of :email_address, :with => /@/
 
-    LEVEL_ANCHORS = ['Beginner', 'Novice', 'Fair', 'Good', 'Excellent']
+    
     AFFILIATIONS = ['AFFIL 1', 'AFFIL 2', 'AFFIL 3']
 
 

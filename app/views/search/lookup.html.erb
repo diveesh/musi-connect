@@ -28,12 +28,6 @@
         <%= f.label g.name %></div>
     <% end %>
     <br/>
-    <div> What level of experience?</div> 
-    <% User::LEVEL_ANCHORS.each do |anchor|%>
-        <div><%= check_box_tag "level_anchors[]", anchor %>
-        <%= f.label anchor %></div>
-    <% end %>
-    <br/>
     <div>Activities:</div>
     <% @activities.each do |a| %>
         <div><%= check_box_tag "activities[]", a.id %>

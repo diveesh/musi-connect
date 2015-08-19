@@ -49,6 +49,12 @@ class UsersController < ApplicationController
             @genres = Genre.all
             @interests = Interest.all
             @activities = Activity.all
+            userInstrumentSkills = InstrumentSkill.where(:user_id => @user.id)
+            @instrumentLevelHash = Hash.new
+            userInstrumentSkills.each do |skill|
+                puts skill.level, skill.instrument_id
+                @instrumentLevelHash[skill.instrument_id.to_s.to_sym] = skill.level
+            end
         else
             redirect_to({action: "login"})
         end
@@ -70,8 +76,16 @@ class UsersController < ApplicationController
         user = User.find(session[:curr_user_id])
         if params[:instruments] != nil
             user.instruments = Array.new
-            params[:instruments].each do |id|
-                user.instruments << Instrument.find(id)
+            instruments = params[:instruments]
+            instruments.each do |insId|
+                #user.instruments << Instrument.find(insId)
+                level = params[("level_for_ins" + insId.to_s).to_sym]
+                skillObject = InstrumentSkill.where(:user_id => user.id, :instrument_id => insId).first
+                if skillObject != nil
+                    skillObject.level = level
+                else
+                    InstrumentSkill.create(:user_id => user.id, :instrument_id => insId, :level => level)
+                end
             end
         end
         
@@ -96,9 +110,8 @@ class UsersController < ApplicationController
             end
         end
         
-        user.level_anchor = params[:user][:level_anchor]
+        user.affiliation = params[:user][:affiliation]
         photo = params[:user][:picture]
-        #puts photo
         if photo != nil
             File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename), 'wb') do |file|
                 file.write(photo.read)
@@ -136,7 +149,6 @@ class UsersController < ApplicationController
             new_user.login_name = params[:login_id]
             new_user.password = params[:password]
             new_user.password_confirmation = params[:confirm_password]
-            new_user.level_anchor = nil
             new_user.email_address = params[:email_address]
             if !new_user.save()
                 flash[:error_messages] = new_user.errors.full_messages

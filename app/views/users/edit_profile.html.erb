@@ -1,5 +1,6 @@
 <% content_for :title, "Edit Profile" %>
 <% content_for :stylesheet, (stylesheet_link_tag "users") %>
+<%= javascript_include_tag 'utils' %>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
@@ -10,33 +11,35 @@
 <% end %>
 <%= form_for @user, url: "update_profile", method: :update do |f| %>
     <p> Affiliation: 
-    <%= f.collection_select :level_anchor, User::AFFILIATIONS, :to_s, :to_s, 
+    <%= f.collection_select :affiliation, User::AFFILIATIONS, :to_s, :to_s, 
        :include_blank => false, :selected => @user.affiliation %> </p>
     <div>Instruments:</div>
     <% @instruments.each do |ins| %>
-        <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins) %>
-        <%= f.label ins.name %></div>
+        <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
+        <%= f.label ins.name %>
+        <%= select_tag(("level_for_ins" + ins.id.to_s).to_sym, options_for_select(InstrumentSkill::LEVEL_ANCHORS, @instrumentLevelHash[ins.id.to_s.to_sym]), :hidden => (!@user.instruments.include? ins), :id => "level_selector" + ins.id.to_s) %>
+        <%= javascript_tag "
+            $('#instrument" + ins.id.to_s + "').click(function() {
+                $('#level_selector" + ins.id.to_s + "')[this.checked ? 'show' : 'hide']();
+            });
+        "%>
     <% end %>
     <br />
     <div>Genres:</div>
     <% @genres.each do |g| %>
-        <div><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
+        <div id="genre<%=g.id%>"><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
         <%= f.label g.name %></div>
     <% end %>
     <br/>
-    <div> Select Level: 
-    <%= f.collection_select :level_anchor, User::LEVEL_ANCHORS, :to_s, :to_s, 
-       :include_blank => false, :selected => @user.level_anchor %> </div>
-    <br/>
     <div>Interested in?</div>
     <% @interests.each do |i| %>
-        <div><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+        <div id="interest<%=i.id%>"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
         <%= f.label i.name %></div>
     <% end %>
     <br/>
     <div>Activities you would like to do:</div>
     <% @activities.each do |a| %>
-        <div><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+        <div id="activity<%=a.id%>"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
         <%= f.label a.name %></div>
     <% end %>
     <br/>
@@ -47,19 +50,6 @@
     <div id="photo_section"><img id="profile_picture" src=<%= @user.photo_file_name == nil ? '/assets/default.png' : '/assets/' + @user.photo_file_name %> alt="your image" /></div>
     <div><%= f.file_field :picture %></div>
     <%= javascript_tag "
-        function readURL(input) {
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#profile_picture').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
         $('#user_picture').change(function(){
             readURL(this);
         });

@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration
         t.column :first_name, :string
         t.column :last_name, :string
         t.column :login_name, :string
-        t.column :level_anchor, :string
         t.column :email_address, :string
         t.column :affiliation, :string
         t.column :photo_file_name, :string

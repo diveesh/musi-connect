@@ -16,9 +16,6 @@
         <p><%= check_box_tag "genres[]", g.id %>
         <%= f.label g.name %></p>
     <% end %>
-    <p> Select Level: 
-    <%= f.collection_select :level_anchor, User::LEVEL_ANCHORS, :to_s, :to_s, 
-       :include_blank => false %> </p>
     <p>Interested in?</p>
     <% @interests.each do |i| %>
         <p><%= check_box_tag "interests[]", i.id %>

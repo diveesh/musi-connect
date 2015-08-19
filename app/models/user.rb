@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     validates_format_of :email_address, :with => /@/
 
     
-    AFFILIATIONS = ['AFFIL 1', 'AFFIL 2', 'AFFIL 3']
+    AFFILIATIONS = ['Stanford School of Medicine', 'Stanford Hospital', 'Lucille Packard Hospital', 'Stanford Medicine Alumni']
 
 
     def password_valid?(password)

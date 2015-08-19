@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20150818054204) do
     t.integer "user_id"
   end
 
-  add_index "activities_users", ["activity_id"], name: "index_activities_users_on_activity_id"
-  add_index "activities_users", ["user_id"], name: "index_activities_users_on_user_id"
+  add_index "activities_users", ["activity_id"], name: "index_activities_users_on_activity_id", using: :btree
+  add_index "activities_users", ["user_id"], name: "index_activities_users_on_user_id", using: :btree
 
   create_table "genres", force: true do |t|
     t.string   "name"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20150818054204) do
     t.integer "user_id"
   end
 
-  add_index "genres_users", ["genre_id"], name: "index_genres_users_on_genre_id"
-  add_index "genres_users", ["user_id"], name: "index_genres_users_on_user_id"
+  add_index "genres_users", ["genre_id"], name: "index_genres_users_on_genre_id", using: :btree
+  add_index "genres_users", ["user_id"], name: "index_genres_users_on_user_id", using: :btree
 
   create_table "instrument_skills", force: true do |t|
     t.integer  "instrument_id"
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20150818054204) do
     t.integer "user_id"
   end
 
-  add_index "interests_users", ["interest_id"], name: "index_interests_users_on_interest_id"
-  add_index "interests_users", ["user_id"], name: "index_interests_users_on_user_id"
+  add_index "interests_users", ["interest_id"], name: "index_interests_users_on_interest_id", using: :btree
+  add_index "interests_users", ["user_id"], name: "index_interests_users_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "first_name"

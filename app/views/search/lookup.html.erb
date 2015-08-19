@@ -13,7 +13,7 @@
 <%= form_for :search, url: "display_results", method: :post, :html => {:id => "searchForm"} do |f| %>
     <% User::AFFILIATIONS.each do |aff|%>
         <div><%= check_box_tag "affiliations[]", aff %>
-        <%= f.label aff %></div>
+        <%= f.label aff.titleize %></div>
     <% end %>
     <br/>
     <div>Instruments:</div>

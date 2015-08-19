@@ -28,7 +28,6 @@ Searcher.prototype.submitForm = function() {
 
 Searcher.prototype.search = function() {
   var obj = this;
-  console.log(obj.userId);
   //jQuery("button").click(function(){
     jQuery.ajax({
       type: 'GET',

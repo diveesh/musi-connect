@@ -19,9 +19,6 @@
 <% photo_file_name = @user.photo_file_name == nil ? "/assets/default.png" : @user.photo_file_name %>
 <div id="photo_section"></div>
 <%= javascript_tag "
-  var photoHelp = new PhotoHelper();
-"%>
-<%= javascript_tag "
 var callback = function(user) {
   var file_name = user.photo_file_name == null ? 'default.png' : user.photo_file_name;
   var newImg = document.createElement('img');

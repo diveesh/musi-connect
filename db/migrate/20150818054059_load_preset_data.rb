@@ -40,8 +40,6 @@ class LoadPresetData < ActiveRecord::Migration
         viola.save(:validate => false)
         cello = Instrument.new(:name => "Strings - Cello")
         cello.save(:validate => false)
-        other = Instrument.new(:name => "Other")
-        other.save(:validate => false)
   
         classical = Genre.new(:name => "Classical")
         classical.save(:validate => false)

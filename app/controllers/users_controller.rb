@@ -60,17 +60,6 @@ class UsersController < ApplicationController
         end
     end
 
-    def setup
-        if session[:curr_user_id] != nil
-            @user = User.find(session[:curr_user_id])
-            @instruments = Instrument.all
-            @genres = Genre.all
-            @interests = Interest.all
-            @activities = Activity.all
-        else
-            redirect_to ({action: "login"})
-        end
-    end
 
     def update_profile
         user = User.find(session[:curr_user_id])
@@ -113,10 +102,10 @@ class UsersController < ApplicationController
         user.affiliation = params[:user][:affiliation]
         photo = params[:user][:picture]
         if photo != nil
-            File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename), 'wb') do |file|
+            File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename + user.login_name), 'wb') do |file|
                 file.write(photo.read)
             end
-            user.photo_file_name = photo.original_filename
+            user.photo_file_name = photo.original_filename + user.login_name
             
         end
         desc = params[:user][:description]
@@ -138,15 +127,12 @@ class UsersController < ApplicationController
     end
 
     def create
-        # auth_hash = request.env['omniauth.auth']
- 
-        # render :text => auth_hash.inspect
-        existing_user = User.find_by_login_name(params[:login_id])
+        existing_user = User.find_by_login_name(params[:login_name])
         if existing_user == nil
             new_user = User.new()
             new_user.first_name = params[:first_name]
             new_user.last_name = params[:last_name]
-            new_user.login_name = params[:login_id]
+            new_user.login_name = params[:login_name]
             new_user.password = params[:password]
             new_user.password_confirmation = params[:confirm_password]
             new_user.email_address = params[:email_address]

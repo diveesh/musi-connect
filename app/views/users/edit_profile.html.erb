@@ -1,6 +1,7 @@
 <% content_for :title, "Edit Profile" %>
 <% content_for :stylesheet, (stylesheet_link_tag "users") %>
 <%= javascript_include_tag 'utils' %>
+<%= javascript_include_tag 'searcher' %>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
@@ -47,8 +48,21 @@
     <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
     <br/>
     <div>Add a picture of yourself!</div>
-    <div id="photo_section"><img id="profile_picture" src=<%= @user.photo_file_name == nil ? '/assets/default.png' : '/assets/' + @user.photo_file_name %> alt="your image" /></div>
+    <div id="photo_section"></div>
     <div><%= f.file_field :picture %></div>
+    <%= javascript_tag "
+    var callback = function(user) {
+      var file_name = user.photo_file_name == null ? 'default.png' : user.photo_file_name;
+      var newImg = document.createElement('img');
+      newImg.src = '/assets/' + file_name;
+      newImg.setAttribute('id', 'profile_picture');
+      document.getElementById('photo_section').appendChild(newImg);
+    }
+    "%>
+    <%= javascript_tag "
+      var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
+      searcher.search();
+    "%>
     <%= javascript_tag "
         $('#user_picture').change(function(){
             readURL(this);

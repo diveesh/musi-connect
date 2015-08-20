@@ -50,10 +50,12 @@ class UsersController < ApplicationController
             @interests = Interest.all
             @activities = Activity.all
             userInstrumentSkills = InstrumentSkill.where(:user_id => @user.id)
-            @instrumentLevelHash = Hash.new
-            userInstrumentSkills.each do |skill|
-                puts skill.level, skill.instrument_id
-                @instrumentLevelHash[skill.instrument_id.to_s.to_sym] = skill.level
+            if userInstrumentSkills != nil
+                @instrumentLevelHash = Hash.new
+                userInstrumentSkills.each do |skill|
+                    puts skill.level, skill.instrument_id
+                    @instrumentLevelHash[skill.instrument_id.to_s.to_sym] = skill.level
+                end
             end
         else
             redirect_to({action: "login"})

@@ -28,7 +28,6 @@ Searcher.prototype.submitForm = function() {
 
 Searcher.prototype.search = function() {
   var obj = this;
-  //jQuery("button").click(function(){
     jQuery.ajax({
       type: 'GET',
       url: obj.URI + obj.userId, 
@@ -36,5 +35,4 @@ Searcher.prototype.search = function() {
         obj.callback(result);
       }
     });
-//});
 }

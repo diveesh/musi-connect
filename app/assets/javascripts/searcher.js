@@ -6,6 +6,11 @@ function Searcher(resultsDivId, formId, URI, userId, callback) {
     this.userId = userId;
 }
 
+/*
+ * Uses AJAX to submit a form without submitting the form via standard HTML. Expects
+ * a JSON string as data in the successFn, which it then parses and passes onto the object's
+ * callback.
+ */
 Searcher.prototype.submitForm = function() {
     var obj = this;
     jQuery('#' + obj.formId).submit(function() {
@@ -18,7 +23,7 @@ Searcher.prototype.submitForm = function() {
                    data: jQuery('#' + obj.formId).serialize(), // serializes the form's elements.
                    success: function(data)
                    {
-                       obj.callback(data);
+                       obj.callback(JSON.parse(data));
                    }
                  });
 

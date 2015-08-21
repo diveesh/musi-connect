@@ -55,7 +55,28 @@ class SearchController < ApplicationController
             if @users.size() == 0
                 flash[:error_messages] << "Your search yielded no results. Try broadening your query."
             end
-            render :json => @users
+            jsonString = '['
+            @users.each_with_index do |user, index|
+                userStr = '{"id":"' + user.id.to_s + '", "first_name":"' + user.first_name + '", "last_name":"' + user.last_name + '"'
+                if user.instruments != nil
+                    userStr << ', "instruments":['
+                    user.instruments.each_with_index do |ins, i|
+                        userStr << '"' + ins.name + '"'
+                        if i != user.instruments.length - 1
+                            userStr << ','
+                        end
+                    end
+                    userStr << ']'
+                end
+                userStr << '}'
+                jsonString << userStr
+                if index != @users.length - 1
+                    jsonString << ','
+                end
+            end
+            jsonString << ']'
+            render :body => jsonString
+            #render :json => @users
         end
     end
 end

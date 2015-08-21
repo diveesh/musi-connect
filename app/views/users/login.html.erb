@@ -1,11 +1,11 @@
 <% content_for :title, "Login" %>
-<% content_for :stylesheet, (stylesheet_link_tag "users") %>
+<link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/diveesh-bucket-1/stylesheets/users.css">
 
 
 <p class="error"><%= flash[:err] %></p>
 <p class="successful_signup"><%= flash[:successful_signup] %></p>
 <h2>Login</h2>
-<%= form_tag("post_login", :method => "post", role: "form", class: 'form-horizontal') do %>
+<%= form_tag("post_login", :method => "post", role: "form") do %>
     <div class="form-group" >
         <%= label_tag(:login_name, "Login Name", class: 'col-sm-1 control-label') %>
         <div class='col-sm-4'>

@@ -1,7 +1,7 @@
 <% content_for :title, "Edit Profile" %>
-<link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/diveesh-bucket-1/stylesheets/users.css">
-<script src="https://s3-us-west-2.amazonaws.com/diveesh-bucket-1/javascripts/utils.js"></script>
-<script src="https://s3-us-west-2.amazonaws.com/diveesh-bucket-1/javascripts/searcher.js"></script>
+<link rel="stylesheet" href="<%= asset_path('stylesheets/users.css') %>">
+<script src="<%= asset_path('javascripts/utils.js') %>"></script>
+<script src="<%= asset_path('javascripts/searcher.js') %>"></script>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
@@ -52,9 +52,9 @@
     <div><%= f.file_field :picture %></div>
     <%= javascript_tag "
     var callback = function(user) {
-      var file_name = user.photo_file_name == null ? 'default.png' : user.photo_file_name;
+      var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
       var newImg = document.createElement('img');
-      newImg.src = '/assets/' + file_name;
+      newImg.src = file_name;
       newImg.setAttribute('id', 'profile_picture');
       document.getElementById('photo_section').appendChild(newImg);
     }

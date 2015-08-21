@@ -125,18 +125,24 @@ class UsersController < ApplicationController
         end
         
         user.affiliation = params[:user][:affiliation]
-        photo = params[:user][:picture]
-        if photo != nil
-            File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename + user.login_name), 'wb') do |file|
-                file.write(photo.read)
-            end
-            user.photo_file_name = photo.original_filename + user.login_name
-        end
+        # photo = params[:user][:picture]
+        # if photo != nil
+        #     if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
+        #         flash[:err] = "Photo must be of jpg, png or gif format."
+        #         redirect_to({action: "new"})
+        #         return
+        #     end
+        #     obj = S3_BUCKET.objects[new_user.login_name + photo.original_filename]
+        #     obj.write(
+        #       file: photo,
+        #       acl: :public_read
+        #     )
+        #     new_user.photo_file_name = obj.key
+        #end
         desc = params[:user][:description]
         if desc != nil
             user.description = desc
         end
-        puts user.photo_file_name
         if !user.save()
             flash[:error_messages] = user.errors.full_messages
             redirect_to({action: "edit_profile"})
@@ -162,15 +168,17 @@ class UsersController < ApplicationController
             new_user.email_address = params[:user][:email_address]
             photo = params[:user][:picture]
             if photo != nil
-                if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-3..-1] != 'gif'
+                if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
                     flash[:err] = "Photo must be of jpg, png or gif format."
                     redirect_to({action: "new"})
                     return
                 end
-                File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename + new_user.login_name), 'wb') do |file|
-                    file.write(photo.read)
-                end
-                new_user.photo_file_name = photo.original_filename + new_user.login_name
+                obj = S3_BUCKET.objects['images/' + new_user.login_name + photo.original_filename]
+                obj.write(
+                  file: photo,
+                  acl: :public_read
+                )
+                new_user.photo_file_name = obj.key
             end
             if !new_user.save()
                 flash[:error_messages] = new_user.errors.full_messages

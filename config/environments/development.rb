@@ -34,4 +34,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.action_controller.asset_host = 's3-us-west-2.amazonaws.com/diveesh-bucket-1/'
 end

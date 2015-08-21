@@ -1,286 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+<meta charset="utf-8">
+<title>Stanford Musiconnect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<% content_for :stylesheet, (stylesheet_link_tag "custom") %>
+<link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700|Josefin+Slab|Droid+Serif|Roboto+Slab' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<%= javascript_include_tag "utils" %>
 
-    <% content_for :title, "MusiConnect" %>
-    <% content_for :stylesheet, (stylesheet_link_tag "welcome") %>
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="assets/bootstrap.min.css" type="text/css">
-
-    <!-- Custom Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css" type="text/css">
-
-    <!-- Plugin CSS -->
-    <link rel="stylesheet" href="assets/animate.min.css" type="text/css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/creative.css" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
-<body id="page-top">
+<body style="background-color:#000;">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a> -->
-            </div>
+    <div class="container">
+     <div class="row"> 
+     
+     <div class="col-lg-12">
+        <header class="navbar navbar-fixed-top navbar-inverse">
+          <div class="container">
+             
+            
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>   
+      </button>
+      <a style="font-family: 'Dancing Script', cursive; color:#bd2031; font-size:35px;" class="navbar-brand" href="#">Musiconnect</a>
+      <div class="collapse navbar-collapse" id="myNavbar">
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="#" data-toggle="modal" data-target="#login-modal" class="nohighlight"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="/users/new"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      </ul>
+  
+            
+            
+            
+            
+          </div>
+      
+      
+    </div>
+    
+        </header>
+        
+      </div>
+      </div>
+        
+    </div>    
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Services</a>
-                    </li> -->
-                    <li>
-                        <%= link_to("Login", controller: "users", action: "login") %>
-                        <!-- <a class="page-scroll" href="#portfolio">Login</a> -->
-                    </li>
-                    <li>
-                        <%= link_to("Sign up", controller: "users", action: "new") %>
-                        <!-- <a class="page-scroll" href="#contact">Sign up</a> -->
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+<!-- End Head Section --> 
 
-    <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1>Stanford MusiConnect</h1>
-                <hr>
-                <p class="highlight">Your resource to connect you with musicians just like you!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
-            </div>
-        </div>
-    </header>
+<!-- Body Section Starts Here --> 
 
-    <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">We've got what you need!</h2>
-                    <hr class="light">
-                    <p class="text-faded">Some cool message</p>
-                    <a href="users/new" class="btn btn-default btn-xl">Get Started!</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<div style="background-image:url(/assets/home-bg.jpg); background-repeat: no-repeat;" class="container"> 
+<div class="row" style="margin-top:100px;"> 
+<div class="col-sm-12 text-center" style="font-family: 'Dancing Script', cursive; color:#bd2031; font-size:55px;"> Stanford Musiconnect</div>
+</div>
 
-<!--     <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">At Your Service</h2>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
-                        <h3>Sturdy Templates</h3>
-                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+
+
+<div class="row text-center" style="padding-top:100px; "> 
+<div class="col-sm-1 ">  </div>
+<div class="col-sm-10 text-center" style="font-size:35px; padding-top:10px; padding-bottom:10px;   -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: rgba(245, 245, 245, 0.9);  font-family: 'Josefin Slab', serif; color:#000; " > Your resource to connect you with musicians just like you!</div>
+<div class="col-sm-1"> </div>
+</div>
+
+
+<div style="padding-top:100px; padding-bottom:100px;"  class="row"> 
+<div class="col-lg-12 text-center">    
+<button type="submit" onclick="window.location.href='/users/new'"  style="padding:20px; font-size:25px; font-weight:500;" class="btn btn-lg btn-danger " >Get Connected</button>     
+</div>
+</div>
+
+
+<div class="row"> 
+<div class="col-sm-1"> </div> 
+<div class="col-sm-2"> <button type="button" onclick="window.location.href='#about-us'" style="color:#CCC; font-size:15px;" class="btn btn-link">About Us</button> </div> 
+<div class="col-sm-6"> </div> 
+<div  class="col-sm-2 text-right"><button type="button" onclick="window.location.href='#contact-us'" style="color:#CCC; font-size:15px;" class="btn btn-link">Contact Us</button> </div> 
+<div class="col-sm-1"> </div> 
+</div>
+
+<div class="row" style="height:2px; background-color:#666; margin-top:35px;"> </div>
+
+<div class="row" style="margin-top:40px;">
+<a name="about-us"></a>
+  
+<div class="col-md-5" > <img class="img-responsive" src="/assets/musi-man.png" ></div>
+<div class="col-md-7 text-center"> <h3 style="color:#666; font-family: 'Josefin Slab', serif; font-size:30px; "> About Us </h3> <br> 
+
+<p class="text-justify" style="color:#666; line-height:30px; font-size:15px; font-family: 'Roboto Slab', serif;"> 
+&quot;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum&quot;.
+
+</p>
+ </div>
+
+</div>
+
+<div class="row" style="height:2px; background-color:#666; margin-top:35px;"> </div>
+
+<div class="row">
+<a name="contact-us"> </a>
+<!--<div class="col-lg-12"> -->
+
+<span class="text-center"> <h3 style="color:#666; font-family: 'Josefin Slab', serif; font-size:30px; "> Let's Connect!</h3>  </span>
+
+<span class="text-center"><p style="color:#666; line-height:30px; font-size:15px; font-family: 'Roboto Slab', serif;">Ready to connect with other musicians? </p> </span>
+
+<div class="text-left col-lg-3"> 
+<address style="color:#666; line-height:30px; font-size:15px; font-family: 'Roboto Slab', serif;">  <strong>  <span class="glyphicon glyphicon-user"  ></span> Diveesh Singh<br>
+</strong><span class="glyphicon glyphicon-phone"  ></span>(408) 966-4100  <br/>
+   <span class="glyphicon glyphicon-envelope"  ></span>  <a style="color:#bd2031" href="mailto:diveesh@gmail.com">diveesh@gmail.com</a>
+</address>
+</div>
+<div class="text-right col-lg-6"> 
+</div>
+
+<div class=" col-lg-3"> 
+
+<address style="color:#666; line-height:30px; font-size:15px; font-family: 'Roboto Slab', serif;">  <strong>  <span class="glyphicon glyphicon-user"  ></span> Jacqueline Genovese<br>
+</strong>
+   <span class="glyphicon glyphicon-envelope"  ></span>  <a style="color:#bd2031" href="mailto:jmgeno@stanford.edu">jmgeno@stanford.edu</a>
+</address>
+
+  </div>
+<!--</div>-->
+
+
+
+<div class="col-lg-12">  <img class="img-responsive" src="/assets/footer-banner.jpg" width="1920" height="455"></div> 
+
+</div>
+
+
+
+</div>
+
+<!-- Body Section Ends Here --> 
+
+
+
+<!-- Footer Section Starts Here --> 
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12 text-center"  style="height:50px; background-color:#bd2031; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
+</div>
+</div>
+<!-- Footer Section Ends Here --> 
+
+
+
+
+    <!-- Pop up Login Panel Starts Here  -->
+    
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                                    
+                    <div class="container" style="margin-top:40px">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="text-align: center;">
+                                        <strong> Login in to Your Account</strong>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="panel-body">
+                                        <%= form_tag("/users/post_login_ajax", :method => "post", role: "form", :id => 'loginSubmit') do %>
+                                            <fieldset>
+                                                 <div class="row text-center  text-danger" id="error-message" style="padding-bottom:15px;"></div> 
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-user"></i>
+                                                                </span> 
+                                                                <%= text_field_tag('login_name',nil, class: 'form-control', :placeholder => "Username") %>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-lock"></i>
+                                                                </span>
+                                                                <%= password_field_tag('password', nil, class: 'form-control', :placeholder => "Password") %>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <%= submit_tag("Sign in", :class => "btn btn-lg btn-danger btn-block ") %>
+                                                            <%= javascript_tag "
+                                                              ajaxFormSubmit('/users/post_login_ajax', 'loginSubmit', function(data) {
+                                                                var response = JSON.parse(data);
+                                                                if (response.status === 'SUCCESS') {
+                                                                  var link = document.createElement('a');
+                                                                  link.href = '/search/lookup';
+                                                                  link.click();
+                                                                  } else {
+                                                                    $('div#error-message').text(response.message);
+                                                                  }
+                                                              });
+                                                            "%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </fieldset>
+                                        <% end %>
+                                    </div>
+                                    <div class="panel-footer ">
+                                        <p>Don't have an account with us yet? <br> <%= link_to("Register Here Now!", :controller => "users", :action => "new") %></p>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Ready to Ship</h3>
-                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Up to Date</h3>
-                        <p class="text-muted">We update dependencies to keep things fresh.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3>Made with Love</h3>
-                        <p class="text-muted">You have to make your websites with love these days!</p>
-                    </div>
-                </div>
+
+            </div>
             </div>
         </div>
-    </section> -->
+    <!-- Pop up Login Panel Ends Here  -->
+        
 
-    <!-- <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="assets/6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
-<!--     <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Free Download at Start Bootstrap!</h2>
-                <a href="#" class="btn btn-default btn-xl wow tada">Download Now!</a>
-            </div>
-        </div>
-    </aside>
- -->
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Connect!</h2>
-                    <hr class="primary">
-                    <p>Ready to connect with other musicians?</p>
-                </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
-                    <p>123-456-6789</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:diveesh@gmail.com">diveesh@gmail.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- jQuery -->
-    <script src="assets/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="assets/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="assets/jquery.easing.min.js"></script>
-    <script src="assets/jquery.fittext.js"></script>
-    <script src="assets/wow.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="assets/creative.js"></script>
-
+        
 </body>
-
-</html>
+</html>                                     

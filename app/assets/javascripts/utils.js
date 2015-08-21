@@ -17,3 +17,23 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function ajaxFormSubmit(URI, formId, callback) {
+    //var obj = this;
+    jQuery('#' + formId).submit(function() {
+
+            var url = URI; // the script where you handle the form input.
+
+            jQuery.ajax({
+                   type: 'POST',
+                   url: url,
+                   data: jQuery('#' + formId).serialize(), // serializes the form's elements.
+                   success: function(data)
+                   {
+                       callback(data);
+                   }
+                 });
+
+            return false; // avoid to execute the actual submit of the form.
+        });
+}

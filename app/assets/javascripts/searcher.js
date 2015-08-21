@@ -8,14 +8,14 @@ function Searcher(resultsDivId, formId, URI, userId, callback) {
 
 Searcher.prototype.submitForm = function() {
     var obj = this;
-    jQuery('#searchForm').submit(function() {
+    jQuery('#' + obj.formId).submit(function() {
 
             var url = obj.URI; // the script where you handle the form input.
 
             jQuery.ajax({
                    type: 'POST',
                    url: url,
-                   data: jQuery('#searchForm').serialize(), // serializes the form's elements.
+                   data: jQuery('#' + obj.formId).serialize(), // serializes the form's elements.
                    success: function(data)
                    {
                        obj.callback(data);

@@ -1,25 +1,199 @@
-<% content_for :title, "Register new user" %>
-<% content_for :stylesheet, (stylesheet_link_tag "users") %>
-<p class="error"><%= flash[:err] %></p>
-<% if flash[:error_messages] %>
-    <% flash[:error_messages].each do |msg| %>
-        <p class="error"><%= msg %></p>
-    <% end %>
-<% end %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stanford Musiconnect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%= form_tag(action: "create",  :method => "post") do %>
-    <p><%= label_tag(:first_name, "First Name") %>
-    <%= text_field_tag(:first_name) %></p>
-    <p><%= label_tag(:last_name, "Last Name") %>
-    <%= text_field_tag(:last_name) %></p>
-    <p><%= label_tag(:email_address, "Email Address") %>
-    <%= text_field_tag(:email_address) %></p>
-    <p><%= label_tag(:login_name, "Login Name") %>
-    <%= text_field_tag(:login_name) %></p>
-    <p><%= label_tag(:password, "Password") %>
-    <%= password_field_tag(:password) %></p>
-    <p><%= label_tag(:confirm_password, "Confirm Password") %>
-    <%= password_field_tag(:confirm_password) %></p>
-    <p><%= submit_tag("Register") %></p>
-<% end %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/assets/custom.css">
+<link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700|Josefin+Slab|Droid+Serif|Roboto+Slab' rel='stylesheet' type='text/css'>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+<style type="text/css">
+body {
+   padding-top: 60px;
+    }
+.form-control {
+	width: 50%;
+	}
+
+tr:nth-of-type(odd) { 
+  background: #e5e5e5; 
+	}
+
+th { 
+  background: #484848; 
+  font-weight: bold;
+  color: #FFF; 
+	}
+
+.form-control1 {	width: 50%;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="container">
+     <div class="row"> 
+     
+     <div class="col-lg-12">
+		<header class="navbar navbar-fixed-top navbar-inverse">
+		  <div class="container">
+			 
+		    
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>   
+      </button>
+      
+      <a style="font-family: 'Dancing Script', cursive; color:#bd2031; font-size:35px;" class="navbar-brand" href="/welcome/index">Musiconnect</a>
+      
+      <div class="collapse navbar-collapse" id="myNavbar">
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="#" data-toggle="modal" data-target="#login-modal" class="nohighlight"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="/users/new"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      </ul>
+  
+            
+            
+            
+            
+		  </div>
+      
+      
+    </div>
+    
+		</header>
+        
+      </div>
+      </div>
+        
+    </div>    
+
+<!-- End Head Section --> 
+
+<!-- Body Section Starts Here --> 
+
+
+<div class="container" style=" margin-top:20px;"> 
+<div class="row"> 
+<div class="col-lg-2"> </div>
+<div class="col-lg-8"> 
+
+<div class="panel panel-default">  
+  <div class="panel-heading text-center"><span style="font-size:25px; line-height:50px;" class="text-center">  Create Your Profile  </span></div>
+
+  
+  <%= form_for :user, url: "create", :html => {:class => "form-horizontal", :role => "form", :style => "padding-left:20px; padding-right:20px;"} do |f|%>
+    <p style="padding:20px 0px 20px 0px;" class="text-center text-danger"> 
+      <% if flash[:error_messages] != nil %>
+        <% flash[:error_messages].each do |msg| %>
+          <div><%= msg %></div>
+        <% end %>
+      <% end %>
+      <% if flash[:err] != nil %>
+        <%= flash[:err] %>
+      <% end %>    
+    </p>
+    
+    <div class="form-group">
+      <label class="col-sm-4 control-label">First Name</label>
+      <div col-sm-8>
+        <%= f.text_field :first_name %>
+      </div>
+    </div>
+
+    
+     <div class="form-group">
+      <label class="col-sm-4 control-label">Last Name</label>
+      <div >
+        <%= f.text_field :last_name %>
+      </div>
+    </div>
+
+	<div class="form-group">
+      <label class="col-sm-4 control-label">Email</label>
+      <div >
+        <%= f.text_field :email_address %>
+      </div>
+    </div>        
+
+     <div class="form-group">
+      <label class="col-sm-4 control-label ">Preferred User Name</label>
+      <div >
+        <%= f.text_field :login_name %>
+      </div>
+    </div>
+    
+     <div class="form-group">
+      <label class="col-sm-4 control-label">Password</label>
+      <div >
+        <%= f.password_field :password %>
+      </div>
+    </div>
+    
+     <div class="form-group">
+      <label class="col-sm-4 control-label">Confirm Password</label>
+      <div >
+        <%= f.password_field :confirm_password %>
+      </div>
+    </div>
+    
+     <div class="form-group">
+    <label  class="col-sm-4 control-label" for="exampleInputFile">Profile Picture </label> 
+    <%= f.file_field :picture %>
+    
+  </div>
+
+<div class="panel-footer text-right"> <%= submit_tag("Register", :class => "btn btn-lg btn-danger", :role => "button") %></div>
+    
+
+ <% end %> 
+
+
+  
+  
+  
+</div>
+</div>
+</div>
+
+<div class="col-lg-2"> </div>
+
+
+</div>
+</div>
+
+<!-- Body Section Ends Here --> 
+
+
+
+<!-- Footer Section Starts Here --> 
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12 text-center"  style="height:50px; background-color:#bd2031; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
+</div>
+</div>
+<!-- Footer Section Ends Here --> 
+
+
+
+
+	
+		
+
+
+		
+</body>
+</html>                                		

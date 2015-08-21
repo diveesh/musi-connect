@@ -21,6 +21,22 @@ class UsersController < ApplicationController
         end
     end
 
+    def post_login_ajax
+        @user = User.find_by_login_name(params[:login_name])
+        if @user != nil
+            if @user.password_valid?(params[:password])
+                session[:curr_user_id] = @user.id
+                render :body => '{"status": "SUCCESS", "message": "User logged in"}'
+            else
+                flash[:err] = "Username and password combination is incorrect"
+                render :body => '{"status": "FAILURE", "message": "Username and password combination is incorrect"}'
+            end
+        else
+            flash[:err] = "Username not found"
+            render :body => '{"status": "FAILURE", "message": "Username not found"}'
+        end
+    end
+
     def display_profile
         if params[:id] != nil
             @id = params[:id]
@@ -29,14 +45,14 @@ class UsersController < ApplicationController
             if session[:curr_user_id] != nil
                 @user = User.find(session[:curr_user_id])
             else
-                redirect_to ({action: "login"})
+                redirect_to ({controller: "welcome", action: "index"})
             end
         end     
     end
 
     def logout
         session[:curr_user_id] = nil
-        redirect_to ({action: "login"})
+        redirect_to ({controller: "welcome", action: "index"})
     end
 
     def new
@@ -58,7 +74,7 @@ class UsersController < ApplicationController
                 end
             end
         else
-            redirect_to({action: "login"})
+            redirect_to({controller: "welcome", action: "index"})
         end
     end
 
@@ -69,7 +85,6 @@ class UsersController < ApplicationController
             user.instruments = Array.new
             instruments = params[:instruments]
             instruments.each do |insId|
-                #user.instruments << Instrument.find(insId)
                 level = params[("level_for_ins" + insId.to_s).to_sym]
                 skillObject = InstrumentSkill.where(:user_id => user.id, :instrument_id => insId).first
                 if skillObject != nil
@@ -108,7 +123,6 @@ class UsersController < ApplicationController
                 file.write(photo.read)
             end
             user.photo_file_name = photo.original_filename + user.login_name
-            
         end
         desc = params[:user][:description]
         if desc != nil
@@ -129,15 +143,27 @@ class UsersController < ApplicationController
     end
 
     def create
-        existing_user = User.find_by_login_name(params[:login_name])
+        existing_user = User.find_by_login_name(params[:user][:login_name])
         if existing_user == nil
             new_user = User.new()
-            new_user.first_name = params[:first_name]
-            new_user.last_name = params[:last_name]
-            new_user.login_name = params[:login_name]
-            new_user.password = params[:password]
-            new_user.password_confirmation = params[:confirm_password]
-            new_user.email_address = params[:email_address]
+            new_user.first_name = params[:user][:first_name]
+            new_user.last_name = params[:user][:last_name]
+            new_user.login_name = params[:user][:login_name]
+            new_user.password = params[:user][:password]
+            new_user.password_confirmation = params[:user][:confirm_password]
+            new_user.email_address = params[:user][:email_address]
+            photo = params[:user][:picture]
+            if photo != nil
+                if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-3..-1] != 'gif'
+                    flash[:err] = "Photo must be of jpg, png or gif format."
+                    redirect_to({action: "new"})
+                    return
+                end
+                File.open(Rails.root.join('app', 'assets', 'images', photo.original_filename + new_user.login_name), 'wb') do |file|
+                    file.write(photo.read)
+                end
+                new_user.photo_file_name = photo.original_filename + new_user.login_name
+            end
             if !new_user.save()
                 flash[:error_messages] = new_user.errors.full_messages
                 redirect_to({action: "new"})

@@ -1,6 +1,6 @@
 <% content_for :title, "Lookup users" %>
 <% content_for :stylesheet, (stylesheet_link_tag "search") %>
-<%= javascript_include_tag "searcher" %>
+<script src="https://s3-us-west-2.amazonaws.com/diveesh-bucket-1/javascripts/searcher.js"></script>
 <% if session[:curr_user_id] != nil %>
     <ul class="nav nav-tabs" role="tablist">
       <li class="active"><%= link_to('Search', controller: "search", action: "lookup") %></li>

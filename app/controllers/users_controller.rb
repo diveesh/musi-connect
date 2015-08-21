@@ -37,6 +37,14 @@ class UsersController < ApplicationController
         end
     end
 
+    def edit_account_info
+        if session[:curr_user_id] != nil
+            @user = User.find(session[:curr_user_id])
+        else
+            redirect_to({controller: "welcome", action: "index"})
+        end
+    end
+
     def display_profile
         if params[:id] != nil
             @id = params[:id]

@@ -45,6 +45,8 @@ group :production do
   gem 'unicorn'
 end
 
+gem 'aws-sdk-v1'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

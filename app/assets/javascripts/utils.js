@@ -19,7 +19,6 @@ function readURL(input) {
 }
 
 function ajaxFormSubmit(URI, formId, callback) {
-    //var obj = this;
     jQuery('#' + formId).submit(function() {
 
             var url = URI; // the script where you handle the form input.

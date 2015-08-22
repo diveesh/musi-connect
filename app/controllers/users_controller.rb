@@ -5,22 +5,6 @@ class UsersController < ApplicationController
         end
     end
 
-    def post_login
-        @user = User.find_by_login_name(params[:login_name])
-        if @user != nil
-            if @user.password_valid?(params[:password])
-                session[:curr_user_id] = @user.id
-                redirect_to ({controller: "search", action: "lookup"}) #, id: params[:id]
-            else
-                flash[:err] = "Username and password combination is incorrect"
-                redirect_to ({action: "login"})
-            end
-        else
-            flash[:err] = "Username not found"
-            redirect_to ({action: "login"})
-        end
-    end
-
     def post_login_ajax
         @user = User.find_by_login_name(params[:login_name])
         if @user != nil
@@ -28,11 +12,9 @@ class UsersController < ApplicationController
                 session[:curr_user_id] = @user.id
                 render :body => '{"status": "SUCCESS", "message": "User logged in"}'
             else
-                flash[:err] = "Username and password combination is incorrect"
                 render :body => '{"status": "FAILURE", "message": "Username and password combination is incorrect"}'
             end
         else
-            flash[:err] = "Username not found"
             render :body => '{"status": "FAILURE", "message": "Username not found"}'
         end
     end
@@ -125,20 +107,6 @@ class UsersController < ApplicationController
         end
         
         user.affiliation = params[:user][:affiliation]
-        # photo = params[:user][:picture]
-        # if photo != nil
-        #     if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
-        #         flash[:err] = "Photo must be of jpg, png or gif format."
-        #         redirect_to({action: "new"})
-        #         return
-        #     end
-        #     obj = S3_BUCKET.objects[new_user.login_name + photo.original_filename]
-        #     obj.write(
-        #       file: photo,
-        #       acl: :public_read
-        #     )
-        #     new_user.photo_file_name = obj.key
-        #end
         desc = params[:user][:description]
         if desc != nil
             user.description = desc
@@ -191,6 +159,38 @@ class UsersController < ApplicationController
         else
             flash[:err] = "That login name has already been taken. Please choose another one"
             redirect_to({action: "new"})
+        end
+    end
+
+    def post_edit_user
+        if session[:curr_user_id] != nil
+            user = User.find(session[:curr_user_id])
+            user.first_name = params[:user][:first_name]
+            user.last_name = params[:user][:last_name]
+            user.email_address = params[:user][:email_address]
+            photo = params[:user][:picture]
+            if photo != nil
+                if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
+                    flash[:err] = "Photo must be of jpg, png or gif format."
+                    redirect_to({action: "edit_account_info"})
+                    return
+                end
+                obj = S3_BUCKET.objects['images/' + user.login_name + photo.original_filename]
+                obj.write(
+                  file: photo,
+                  acl: :public_read
+                )
+                user.photo_file_name = obj.key
+            end
+            if !user.save()
+                flash[:error_messages] = new_user.errors.full_messages
+                redirect_to({action: "edit_account_info"})
+            else
+                flash[:error_messages] = nil
+                redirect_to ({action: "display_profile"})  
+            end
+        else
+            redirect_to({controller: "welcome", action: "index"})
         end
     end
 

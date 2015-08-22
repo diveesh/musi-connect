@@ -47,26 +47,5 @@
     <div>Anything else you want to tell us?</div>
     <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
     <br/>
-    <div>Add a picture of yourself!</div>
-    <div id="photo_section"></div>
-    <div><%= f.file_field :picture %></div>
-    <%= javascript_tag "
-    var callback = function(user) {
-      var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
-      var newImg = document.createElement('img');
-      newImg.src = file_name;
-      newImg.setAttribute('id', 'profile_picture');
-      document.getElementById('photo_section').appendChild(newImg);
-    }
-    "%>
-    <%= javascript_tag "
-      var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
-      searcher.search();
-    "%>
-    <%= javascript_tag "
-        $('#user_picture').change(function(){
-            readURL(this);
-        });
-    "%>
     <%= f.submit "Update Profile"%>
 <% end %>

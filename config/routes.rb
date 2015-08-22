@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get ':controller(/:action(/:id))'
   post ':controller(/:action(/:id))'
 
+  patch ':controller(/:action(/:id))'
   #resources :uploads
   # get '/login', :to => 'users#login'
 

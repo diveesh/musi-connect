@@ -35,5 +35,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  config.action_mailer.delivery_method = :postmark
+  config.action_mailer.postmark_settings = { :api_key => 'c1031640-5dc8-4908-9f6b-05f25942920e' }
+  
   config.action_controller.asset_host = 's3-us-west-2.amazonaws.com/diveesh-bucket-1/'
 end

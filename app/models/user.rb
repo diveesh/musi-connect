@@ -5,6 +5,13 @@ class User < ActiveRecord::Base
     has_and_belongs_to_many :interests
     has_and_belongs_to_many :activities
 
+    after_commit :send_email, :on => :create
+
+    def send_email
+        puts 'sending email!'
+        UserMailer.user_notification(self).deliver!
+    end
+
     # validates_confirmation_of :password
 
     has_secure_password

@@ -47,6 +47,8 @@ end
 
 gem 'aws-sdk-v1'
 
+gem 'postmark-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

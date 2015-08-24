@@ -85,6 +85,12 @@ GEM
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
+    postmark (1.6.0)
+      json
+      rake
+    postmark-rails (0.11.0)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.6.0)
     rack (1.5.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -164,6 +170,7 @@ DEPENDENCIES
   less-rails
   mysql2
   omniauth
+  postmark-rails
   rails (= 4.1.7)
   rails-uploader
   safe_attributes

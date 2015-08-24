@@ -1,9 +1,4 @@
 class UsersController < ApplicationController
-    def login
-        if session[:curr_user_id] != nil
-            redirect_to ({controller: "search", action: "lookup"})
-        end
-    end
 
     def post_login_ajax
         @user = User.find_by_login_name(params[:login_name])

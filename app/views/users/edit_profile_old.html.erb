@@ -1,0 +1,51 @@
+<% content_for :title, "Edit Profile" %>
+<link rel="stylesheet" href="<%= asset_path('stylesheets/users.css') %>">
+<script src="<%= asset_path('javascripts/utils.js') %>"></script>
+<script src="<%= asset_path('javascripts/searcher.js') %>"></script>
+<% if session[:curr_user_id] != nil %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
+      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
+      <li class="active"><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
+      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
+    </ul>
+<% end %>
+<%= form_for @user, url: "update_profile", method: :update do |f| %>
+    <p> Affiliation: 
+    <%= f.collection_select :affiliation, User::AFFILIATIONS, :to_s, :to_s, 
+       :include_blank => false, :selected => @user.affiliation %> </p>
+    <div>Instruments:</div>
+    <% @instruments.each do |ins| %>
+        <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
+        <%= f.label ins.name %>
+        <%= select_tag(("level_for_ins" + ins.id.to_s).to_sym, options_for_select(InstrumentSkill::LEVEL_ANCHORS, @instrumentLevelHash[ins.id.to_s.to_sym]), :hidden => (!@user.instruments.include? ins), :id => "level_selector" + ins.id.to_s) %></div>
+        <%= javascript_tag "
+            $('#instrument" + ins.id.to_s + "').click(function() {
+                $('#level_selector" + ins.id.to_s + "')[this.checked ? 'show' : 'hide']();
+            });
+        "%>
+    <% end %>
+    <br />
+    <div>Genres:</div>
+    <% @genres.each do |g| %>
+        <div id="genre<%=g.id%>"><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
+        <%= f.label g.name %></div>
+    <% end %>
+    <br/>
+    <div>Interested in?</div>
+    <% @interests.each do |i| %>
+        <div id="interest<%=i.id%>"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+        <%= f.label i.name %></div>
+    <% end %>
+    <br/>
+    <div>Activities you would like to do:</div>
+    <% @activities.each do |a| %>
+        <div id="activity<%=a.id%>"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+        <%= f.label a.name %></div>
+    <% end %>
+    <br/>
+    <div>Anything else you want to tell us?</div>
+    <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
+    <br/>
+    <%= f.submit "Update Profile"%>
+<% end %>

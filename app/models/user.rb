@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
     after_commit :send_email, :on => :create
 
     def send_email
-        puts 'sending email!'
         UserMailer.user_notification(self).deliver!
     end
 
@@ -18,6 +17,7 @@ class User < ActiveRecord::Base
 
     validates :password, length: { minimum: 8 }, allow_nil: true
     validates_format_of :email_address, :with => /@/
+    validates_presence_of :affiliation
 
     
     AFFILIATIONS = ['Stanford School of Medicine', 'Stanford Hospital', 'Lucille Packard Hospital', 'Stanford Medicine Alumni']

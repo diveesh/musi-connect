@@ -1,51 +1,263 @@
-<% content_for :title, "Edit Profile" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stanford Musiconnect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<%= asset_path('stylesheets/users.css') %>">
 <script src="<%= asset_path('javascripts/utils.js') %>"></script>
 <script src="<%= asset_path('javascripts/searcher.js') %>"></script>
-<% if session[:curr_user_id] != nil %>
-    <ul class="nav nav-tabs" role="tablist">
-      <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
-      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
-      <li class="active"><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
-      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
-    </ul>
-<% end %>
-<%= form_for @user, url: "update_profile", method: :update do |f| %>
-    <p> Affiliation: 
-    <%= f.collection_select :affiliation, User::AFFILIATIONS, :to_s, :to_s, 
-       :include_blank => false, :selected => @user.affiliation %> </p>
-    <div>Instruments:</div>
-    <% @instruments.each do |ins| %>
-        <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
-        <%= f.label ins.name %>
-        <%= select_tag(("level_for_ins" + ins.id.to_s).to_sym, options_for_select(InstrumentSkill::LEVEL_ANCHORS, @instrumentLevelHash[ins.id.to_s.to_sym]), :hidden => (!@user.instruments.include? ins), :id => "level_selector" + ins.id.to_s) %>
-        <%= javascript_tag "
-            $('#instrument" + ins.id.to_s + "').click(function() {
-                $('#level_selector" + ins.id.to_s + "')[this.checked ? 'show' : 'hide']();
-            });
-        "%>
-    <% end %>
-    <br />
-    <div>Genres:</div>
-    <% @genres.each do |g| %>
+
+<style type="text/css">
+body {
+   padding-top: 60px;
+    }
+.form-control {
+  width: 50%;
+  }
+
+tr:nth-of-type(odd) { 
+  background: #e5e5e5; 
+  }
+
+th { 
+  background: #484848; 
+  font-weight: bold;
+  color: #FFF; 
+  }
+
+</style>
+
+</head>
+
+<body>
+
+  <div class="container" >
+     <div class="row"> 
+     
+     <div class="col-lg-12" >
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+       
+        
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>   
+      </button>
+      
+      <a style="font-family: 'Dancing Script', cursive; color:#eb6864; font-size:35px;" class="navbar-brand" href="index.html">Musiconnect</a>
+      
+      <div class="collapse navbar-collapse" id="myNavbar" >
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+        
+        <li><a href="/search/lookup"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+    <li><a href="/users/display_profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                 <span class="glyphicon glyphicon-user"></span> <%= @user.first_name + " " + @user.last_name%> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+              
+                 <li> <a href="/users/edit_account_info"> <span class="glyphicon glyphicon-edit"></span> My Account</a></li>
+                         <li>  <a href="/welcome/index"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+              </ul>
+        </li>
+        
+      </ul>
+  
+            
+            
+            
+            
+      </div>
+      
+      
+    </div>
+    
+    </header>
+        
+      </div>
+      </div>
+        
+    </div>    
+
+<!-- End Head Section --> 
+
+<!-- Body Section Starts Here --> 
+
+
+
+
+
+<div class="container" style=" margin-top:20px;"> 
+
+
+
+<div class="row"> 
+<div class="col-lg-12"> 
+
+<!--- page here -->
+
+<div class="panel panel-default">  
+  <div class="panel-heading text-center">  <span style="font-size:25px; line-height:30px;" class="text-center"> Edit My Profile  </span>
+    <!--<div class="pull-right">
+        <button type="button" onClick="window.open('edit-my-profile.html')" class="btn btn-default btn-md">
+  <span class="glyphicon glyphicon-edit"  aria-hidden="true"></span> Edit
+</button>
+      </div>-->
+  
+     </div>
+  
+  
+<div class="panel-body"> 
+
+<div class="col-lg-3" style="padding:10px 10px 10px 25px;;"> 
+<div id="photo_section"></div>
+    <%= javascript_tag "
+    var callback = function(user) {
+      var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
+      var newImg = document.createElement('img');
+      newImg.src = file_name;
+      newImg.setAttribute('id', 'profile_picture');
+      document.getElementById('photo_section').appendChild(newImg);
+    }
+    "%>
+    <%= javascript_tag "
+      var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
+      searcher.search();
+    "%> 
+ </div>
+ 
+ <%= form_for @user, url: "update_profile", method: :update do |f| %>
+ 
+ <div class="col-lg-4" style="padding-top:20px; line-height:25px;"> 
+ <p> <strong><%= @user.first_name + " " + @user.last_name %></strong></p>
+ <p><strong> <%= @user.email_address %></strong></p>
+<%= f.collection_select :affiliation, User::AFFILIATIONS, :to_s, :to_s, 
+       :include_blank => false, :selected => @user.affiliation, :prompt => "Select your affiliation..." %>
+     
+ </div>
+
+   
+      
+ 
+<div class="col-lg-5 " style="margin-top:20px; padding:10px;  line-height:25px; ">
+  <%= f.text_area(:description, rows: 5, :style => "min-width:300px; border:10px solid #999;", :class => "form-control pull-right") %>
+
+ </div>
+ 
+</div>
+
+
+
+
+<div class="panel-body">
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Instruments 
+        </div>
+        <div class="panel-body panel-height-custom">
+        <% @instruments.each do |ins| %>
+          <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
+          <%= f.label ins.name %>
+          <%= select_tag(("level_for_ins" + ins.id.to_s).to_sym, options_for_select(InstrumentSkill::LEVEL_ANCHORS, @instrumentLevelHash[ins.id.to_s.to_sym]), :hidden => (!@user.instruments.include? ins), :id => "level_selector" + ins.id.to_s) %></div>
+          <%= javascript_tag "
+              $('#instrument" + ins.id.to_s + "').click(function() {
+                  $('#level_selector" + ins.id.to_s + "')[this.checked ? 'show' : 'hide']();
+              });
+          "%>
+      <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+          Genres
+        </div>
+        <div class="panel-body panel-height-custom">
+        <% @genres.each do |g| %>
         <div id="genre<%=g.id%>"><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
         <%= f.label g.name %></div>
-    <% end %>
-    <br/>
-    <div>Interested in?</div>
-    <% @interests.each do |i| %>
-        <div id="interest<%=i.id%>"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
-        <%= f.label i.name %></div>
-    <% end %>
-    <br/>
-    <div>Activities you would like to do:</div>
-    <% @activities.each do |a| %>
-        <div id="activity<%=a.id%>"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
-        <%= f.label a.name %></div>
-    <% end %>
-    <br/>
-    <div>Anything else you want to tell us?</div>
-    <div><%= f.text_area(:description, cols: 80, rows: 10) %></div>
-    <br/>
-    <%= f.submit "Update Profile"%>
+        <% end %>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Activities 
+        </div>
+        <div class="panel-body panel-height-custom">
+        <% @activities.each do |a| %>
+          <div id="activity<%=a.id%>"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+          <%= f.label a.name %></div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Interests 
+        </div>
+        <div class="panel-body panel-height-custom">
+          <% @interests.each do |i| %>
+            <div id="interest<%=i.id%>"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+            <%= f.label i.name %></div>
+          <% end %>
+        </div>
+      </div>
+            
+    </div>
+        
+        
+  </div>
+
+  
+
+
+  
+  
+   <div class="panel-footer text-right">
+   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button" %> </div> 
+</div> 
 <% end %>
+
+<!-- Page here --> 
+
+
+
+
+
+</div>
+</div>
+</div>
+
+<!-- Body Section Ends Here --> 
+
+
+
+<!-- Footer Section Starts Here --> 
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12 text-center"  style="height:50px; background-color:#eb6864; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
+</div>
+</div>
+<!-- Footer Section Ends Here --> 
+
+
+
+
+  
+    
+
+
+    
+</body>
+</html>                                   

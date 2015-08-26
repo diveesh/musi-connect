@@ -32,57 +32,7 @@ th {
 
 <body>
 
-  <div class="container" >
-     <div class="row"> 
-     
-     <div class="col-lg-12" >
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-       
-        
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>   
-      </button>
-      
-      <a style="font-family: 'Dancing Script', cursive; color:#eb6864; font-size:35px;" class="navbar-brand" href="index.html">Musiconnect</a>
-      
-      <div class="collapse navbar-collapse" id="myNavbar" >
-      
-      <ul class="nav navbar-nav navbar-right">
-        
-        
-        <li><a href="/search/lookup"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-    <li><a href="/users/display_profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-        <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                 <span class="glyphicon glyphicon-user"></span> <%= @user.first_name + " " + @user.last_name%> <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-              
-                 <li> <a href="/users/edit_account_info"> <span class="glyphicon glyphicon-edit"></span> My Account</a></li>
-                         <li>  <a href="/welcome/index"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-              </ul>
-        </li>
-        
-      </ul>
-  
-            
-            
-            
-            
-      </div>
-      
-      
-    </div>
-    
-    </header>
-        
-      </div>
-      </div>
-        
-    </div>    
+<%=render 'layouts/login_navbar'%>   
 
 <!-- End Head Section --> 
 

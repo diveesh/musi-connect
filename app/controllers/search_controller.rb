@@ -1,8 +1,9 @@
 class SearchController < ApplicationController
     def lookup
         if session[:curr_user_id] == nil
-            redirect_to({controller: "users", action: "login"})
+            redirect_to({controller: "welcome", action: "index"})
         end
+        @user = User.find(session[:curr_user_id])
         @instruments = Instrument.all
         @genres = Genre.all
         @interests = Interest.all
@@ -27,11 +28,12 @@ class SearchController < ApplicationController
                 @users = @users & User.where("affiliation" => params[:affiliations])
             end
             if @users.size() == 0
-                flash[:error_messages] << "Your search yielded no results. Try broadening your query."
+                render :body => '{"status":"ERROR", "message":"No users found"}'
+                return
             end
-            jsonString = '['
+            jsonString = '{"status":"SUCCESS", "data": ['
             @users.each_with_index do |user, index|
-                userStr = '{"id":"' + user.id.to_s + '", "first_name":"' + user.first_name + '", "last_name":"' + user.last_name + '"'
+                userStr = '{"id":"' + user.id.to_s + '", "first_name":"' + user.first_name + '", "last_name":"' + user.last_name + '", "email_address":"' + user.email_address + '"'
                 if user.instruments != nil
                     userStr << ', "instruments":['
                     user.instruments.each_with_index do |ins, i|
@@ -48,9 +50,8 @@ class SearchController < ApplicationController
                     jsonString << ','
                 end
             end
-            jsonString << ']'
+            jsonString << ']}'
             render :body => jsonString
-            #render :json => @users
         end
     end
 end

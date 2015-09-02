@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require jquery
 //= require jquery_ujs
 //= require jquery-fileupload
@@ -17,7 +18,7 @@
 //= require jquery-fileupload/angularjs
 //= require jquery-fileupload/jquery-ui
 //= require turbolinks
+//= require bootstrap.min.js
 //= require bootstrap-sprockets
 //= require_tree .
 
-jQuery.noConflict()

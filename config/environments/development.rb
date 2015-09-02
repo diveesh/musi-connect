@@ -39,4 +39,5 @@ Rails.application.configure do
   config.action_mailer.postmark_settings = { :api_key => 'c1031640-5dc8-4908-9f6b-05f25942920e' }
   
   config.action_controller.asset_host = 's3-us-west-2.amazonaws.com/diveesh-bucket-1/'
+
 end

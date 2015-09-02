@@ -1,56 +1,140 @@
 <% content_for :title, "Lookup users" %>
-<link rel="stylesheet" href="<%= asset_path('stylesheets/search.css') %>">
-<script src="<%= asset_path('javascripts/searcher.js') %>"></script>
-<% if session[:curr_user_id] != nil %>
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="active"><%= link_to('Search', controller: "search", action: "lookup") %></li>
-      <li><%= link_to('My Profile', controller: "users", action: "display_profile") %></li>
-      <li><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
-      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
-    </ul>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/custom.js')) %>
+<%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/template.css')) %>
+<%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/search.css')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/tabularResults.js')) %>
+<%=render 'layouts/login_navbar' %>   
+
+<!-- End Head Section --> 
+
+<!-- Body Section Starts Here --> 
+
+
+
+
+<div class="container"> 
+
+
+<!--- page here -->
+
+<div class="panel panel-default" >  
+  <div class="panel-heading  text-center clearfix"> <span style="font-size:25px; line-height:30px;" class="text-center">  Select Your Search Criteria </span> 
+<%= form_for :search, url: "user_search", method: :post, :html => {:id => "searchForm"} do |f| %>
+  </div>
+    <div class="panel-body">
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading panel-heading-default">
+             Affiliation 
+            </div>
+              <div class="panel-body panel-height-custom">
+                <% User::AFFILIATIONS.each do |aff|%>
+                    <div><%= check_box_tag "affiliations[]", aff %>
+                    <%= f.label aff.titleize %></div>
+                <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-default">
+                    Instruments 
+              </div>
+                <div class="panel-body panel-height-custom">
+                    <% @instruments.each do |ins| %>
+                        <div><%= check_box_tag "instruments[]", ins.id %>
+                        <%= f.label ins.name %></div>
+                    <% end %>      
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-default">
+                     Genre 
+              </div>
+                <div class="panel-body panel-height-custom">
+                    <% @genres.each do |g| %>
+                        <div><%= check_box_tag "genres[]", g.id %>
+                        <%= f.label g.name %></div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" >
+            <div class="panel panel-default">
+                <div class="panel-heading panel-heading-default">
+                     Interests 
+                </div>
+                <div class="panel-body panel-height-custom">
+                    <% @interests.each do |a| %>
+                        <div><%= check_box_tag "interests[]", a.id %>
+                        <%= f.label a.name %></div>
+                    <% end %>
+                </div>
+            </div>
+            
+        </div>
+        
+        
+      <div class="panel-footer text-right"> <%= f.submit "Search", :class => "btn btn-md btn-danger ", :role => "button", :id => "searchButton", :href => "http://jqueryui.com/demos/tooltip/#option-show", :title => "SLIDE UP" %></div>
+                
+    </div>
+ 
+    </div> 
+
 <% end %>
-<h2>Enter your search criteria</h2>
-<%= form_for :search, url: "display_results", method: :post, :html => {:id => "searchForm"} do |f| %>
-    <% User::AFFILIATIONS.each do |aff|%>
-        <div><%= check_box_tag "affiliations[]", aff %>
-        <%= f.label aff.titleize %></div>
-    <% end %>
-    <br/>
-    <div>Instruments:</div>
-    <% @instruments.each do |ins| %>
-        <div><%= check_box_tag "instruments[]", ins.id %>
-        <%= f.label ins.name %></div>
-    <% end %>
-    <br />
-    <div>Genres:</div>
-    <% @genres.each do |g| %>
-        <div><%= check_box_tag "genres[]", g.id %>
-        <%= f.label g.name %></div>
-    <% end %>
-    <br/>
-    <div>Activities:</div>
-    <% @activities.each do |a| %>
-        <div><%= check_box_tag "activities[]", a.id %>
-        <%= f.label a.name %></div>
-    <% end %>
-    <%= f.submit("Find musicians!", id: "search") %>
-    <div id="result"></div>
+<!-- Page here --> 
+
+
+<div class="text-center" hidden style="font-size:20px; padding:10px;  background-color:#999" id="resultsHeader">   Your Search Results   </div> 
+  
+  <div class="table-responsive" hidden id="resultsTableDiv">
+    <table class="table" style="scroll" id="resultsTable">
+        <thead>
+            <tr>
+              <th>###</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Instruments</th>   
+            </tr>
+        </thead>
+        <tbody id="resultsBody">
+
+        </tbody>
+    </table>
+  </div>
+  
+  
+  
+<!--   <div class="panel-footer text-right">
+    <input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.open('search-results.html')" value="Search">
+  </div> -->
+</div> 
+
+</div>
+</div>
     <%= javascript_tag " var searcher = new Searcher('result', 'searchForm', '/search/user_search', null, function(data) {
-        var result = document.getElementById(this.resultsDivId);
-        while (result.firstChild) {
-            result.removeChild(result.firstChild);
+        if (data.status === 'SUCCESS') {
+            $('#resultsHeader').show();
+            $('#resultsTableDiv').show();
+            fillResultsTable('resultsBody', 'resultsTable', data.data);
+        } else {
         }
-        for (var i = 0; i < data.length; i++) {
-            var user = data[i];
-            var newDiv = document.createElement('div');
-            var link = document.createElement('a');
-            link.href = '/users/display_profile/' + user.id;
-            link.innerHTML = user.first_name + ' ' + user.last_name;-
-            newDiv.appendChild(link);
-            result.appendChild(newDiv);
-        }
-        result.scrollIntoView();
     });
         searcher.submitForm();
+
     "%>
-<% end %>
+<!-- Body Section Ends Here --> 
+
+
+
+<!-- Footer Section Starts Here --> 
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12 text-center"  style="height:50px; background-color:#eb6864; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
+</div>
+</div>
+<!-- Footer Section Ends Here --> 
+                                 

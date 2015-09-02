@@ -1,7 +1,7 @@
 <% content_for :title, "Sign up" %>
-<link rel="stylesheet" href="<%= asset_path('stylesheets/template.css') %>">
-<link rel="stylesheet" href="<%= asset_path('stylesheets/users.css') %>">
-<script src="<%= asset_path('javascripts/utils.js') %>"></script>
+<% content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/users.css')) %>
+<% content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/template.css')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/utils.js')) %>
 <%=render 'layouts/not_loggedin_navbar' %>  
 
 <!-- End Head Section --> 

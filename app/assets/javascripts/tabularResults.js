@@ -17,6 +17,7 @@ function fillResultsTable(tBodyId, tableId, users) {
         var instrumentsP = document.createElement('p');
         instrumentsP.innerHTML = user.instruments.join(",");
         instrumentsP.className = 'iffyTip wd250';
+        instrumentsP.title = user.instruments.join(",");
         number.appendChild(numberP);
         name.appendChild(nameP);
         email.appendChild(emailP);

@@ -198,7 +198,7 @@
         overflow-y:scroll;
 }
 
-.tooltip > .tooltip-inner {
+.tooltip {
       background-color: #000; 
       color: #FFF; 
       border: 1px solid #000; 

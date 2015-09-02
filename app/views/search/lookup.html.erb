@@ -1,9 +1,10 @@
 <% content_for :title, "Lookup users" %>
-<% content_for :javascript, (javascript_include_tag asset_path('javascripts/custom.js')) %>
+
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/template.css')) %>
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/search.css')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/tabularResults.js')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/custom.js')) %>
 <%=render 'layouts/login_navbar' %>   
 
 <!-- End Head Section --> 
@@ -104,7 +105,6 @@
             </tr>
         </thead>
         <tbody id="resultsBody">
-
         </tbody>
     </table>
   </div>

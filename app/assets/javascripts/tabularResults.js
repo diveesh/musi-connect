@@ -33,9 +33,7 @@ function fillResultsTable(tBodyId, tableId, users) {
             var userId = user.id;
             $('#resultsTable tbody').off('click', '#' + rowId);
             $('#resultsTable tbody').on('click', '#' + rowId, function() {
-                console.log('Inside rowId: ' + rowId);
                 window.open('/users/display_profile/' + userId);
-                console.log('Onclick userId: ' + userId);
             });
         };
         closure();

@@ -78,13 +78,16 @@
         </div>
         
         
-      <div class="panel-footer text-right"> <%= f.submit "Search", :class => "btn btn-md btn-danger ", :role => "button", :id => "searchButton", :href => "http://jqueryui.com/demos/tooltip/#option-show", :title => "SLIDE UP" %></div>
+    <div class="panel-footer text-right"> 
+        <%= f.submit "Search", :class => "btn btn-md btn-danger ", :role => "button", :id => "searchButton"%>
+    <% end %>
+        <input type="submit" class="btn btn-md btn-danger " role="button" onClick="$('input:checkbox').removeAttr('checked');" value="Clear">
+    </div>
                 
     </div>
  
     </div> 
 
-<% end %>
 <!-- Page here --> 
 
 
@@ -121,6 +124,10 @@
             $('#resultsTableDiv').show();
             fillResultsTable('resultsBody', 'resultsTable', data.data);
         } else {
+            $('#resultsBody').empty();
+            $('#resultsHeader').hide();
+            $('#resultsTableDiv').hide();
+            console.log(data.message);
         }
     });
         searcher.submitForm();

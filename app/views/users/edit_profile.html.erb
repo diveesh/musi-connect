@@ -11,7 +11,13 @@
 
 <div class="container" style=" margin-top:20px;"> 
 
-
+<div class="row text-center  text-danger" id="error-message" style="padding-bottom:15px;">
+  <% unless flash[:error_messages] == nil %>
+    <% flash[:error_messages].each do |msg| %>
+      <%= msg %>
+    <% end %>
+  <% end %>
+</div> 
 
 <div class="row"> 
 <div class="col-lg-12"> 

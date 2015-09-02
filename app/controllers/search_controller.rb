@@ -15,20 +15,29 @@ class SearchController < ApplicationController
         if session[:curr_user_id] != nil
             flash[:error_messages] = []
             @users = User.all.to_set - Set.new.add(User.find(session[:curr_user_id]))
+            filtered = false
             if params[:instruments] != nil
                 @users = @users & User.joins(:instruments).where("instruments.id" => params[:instruments]).to_set
+                filtered = true
             end
             if params[:genres] != nil
                 @users = @users & User.joins(:genres).where("genres.id" => params[:genres]).to_set
+                filtered = true
             end
             if params[:activities] != nil
                 @users = @users & User.joins(:activities).where("activities.id" => params[:activities]).to_set
+                filtered = true
             end
             if params[:affiliations] != nil
-                @users = @users & User.where("affiliation" => params[:affiliations])
+                @users = @users & User.where("affiliation" => params[:affiliations]).to_set
+                filtered = true
             end
             if @users.size() == 0
                 render :body => '{"status":"ERROR", "message":"No users found"}'
+                return
+            end
+            if !filtered
+                render :body => '{"status":"ERROR", "message":"No checkboxes selected"}'
                 return
             end
             jsonString = '{"status":"SUCCESS", "data": ['

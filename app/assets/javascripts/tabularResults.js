@@ -28,9 +28,18 @@ function fillResultsTable(tBodyId, tableId, users) {
         row.id = 'row' + (i + 1);
         tbody.appendChild(row);
 
-        $('#resultsTable tbody').on('click', '#' + row.id, function() {
-            window.open('/users/display_profile/' + user.id);
-        });
+        var closure = function() {
+            var rowId = row.id;
+            var userId = user.id;
+            $('#resultsTable tbody').off('click', '#' + rowId);
+            $('#resultsTable tbody').on('click', '#' + rowId, function() {
+                console.log('Inside rowId: ' + rowId);
+                window.open('/users/display_profile/' + userId);
+                console.log('Onclick userId: ' + userId);
+            });
+        };
+        closure();
+        
 
         $('#' + row.id).css('cursor', 'pointer');
         $(function() {

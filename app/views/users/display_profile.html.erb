@@ -1,48 +1,173 @@
-<% content_for :title, "Display Profile" %>
-<link rel="stylesheet" href="<%= asset_path('stylesheets/users.css') %>">
-<script src="<%= asset_path('javascripts/searcher.js') %>"></script>
-<script src="<%= asset_path('javascripts/photoHelper.js') %>"></script>
-<% if session[:curr_user_id] != nil %>
-    <ul class="nav nav-tabs" role="tablist">
-      <li><%= link_to('Search', controller: "search", action: "lookup") %></li>
-      <% if @id == nil %>
-        <li class="active"><%= link_to('My Profile', controller: "users", action: "display_profile", id: session[:curr_user_id]) %></li>
-      <% else %>
-        <li><%= link_to('My Profile', controller: "users", action: "display_profile", id: session[:curr_user_id]) %></li>
-      <% end %>
-      <li><%= link_to('Edit Profile', controller: "users", action: "edit_profile") %></li>
-      <li><%= link_to('Logout', controller: "users", action: "logout") %></li>
-    </ul>
-<% end %>
-<% name = @user.first_name + " " + @user.last_name %>
-<h2><%= ERB::Util::html_escape(name) %></h2>
-<% photo_file_name = @user.photo_file_name == nil ? "/assets/default.png" : @user.photo_file_name %>
+<%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/template.css')) %>
+<%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/custom.css')) %>
+<%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/users.css')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
+<%= render 'layouts/login_navbar' %>
+<!-- Body Section Starts Here --> 
+
+
+
+
+
+<div class="container" style=" margin-top:20px;"> 
+
+
+
+<div class="row"> 
+<div class="col-lg-12"> 
+
+<!--- page here -->
+
+<div class="panel panel-default">  
+  <div class="panel-heading text-center">  <span style="font-size:25px; line-height:30px;" class="text-center"> Profile  </span>
+    <%  if session[:curr_user_id] == @user.id %>
+      <div class="pull-right">
+        <button type="button" onClick="location.href='/users/edit_profile';" class="btn btn-default btn-md">
+          <span class="glyphicon glyphicon-edit"  aria-hidden="true"></span> Edit
+        </button>
+
+      </div>
+    <% else %>
+      <div class="pull-right">
+        <button type="button" onClick="self.close();" class="btn btn-default btn-danger">
+          <span class="glyphicon glyphicon-remove"  aria-hidden="true"></span> Close
+        </button>
+
+      </div>
+    <% end %>
+  
+     </div>
+  
+  
+<div class="panel-body"> 
+
+<div class="col-lg-3" style="padding:10px 10px 10px 25px;;"> 
 <div id="photo_section"></div>
-<%= javascript_tag "
-var callback = function(user) {
-  var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
-  var newImg = document.createElement('img');
-  newImg.src = file_name;
-  newImg.setAttribute('id', 'profile_picture');
-  document.getElementById('photo_section').appendChild(newImg);
-}
-"%>
-<%= javascript_tag "
-  var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
-  searcher.search();
-"%>
-<br/>
-<div><%= @user.affiliation %></div>
-<% @user.instruments.each do |instrument|%>
-    <div><%= instrument.name %></div>
-<% end %>
-<% @user.genres.each do |genre|%>
-    <div><%= genre.name %></div>
-<% end %>
-<% @user.activities.each do |activity| %>
-    <div><%= activity.name %></div>
-<% end %>
-<% @user.interests.each do |interest|%>
-    <div><%= interest.name %></div>
-<% end %>
-<div><%= ERB::Util::html_escape(@user.description) %></div>
+    <%= javascript_tag "
+    var callback = function(user) {
+      var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
+      var newImg = document.createElement('img');
+      newImg.src = file_name;
+      newImg.setAttribute('id', 'profile_picture');
+      document.getElementById('photo_section').appendChild(newImg);
+    }
+    "%>
+    <%= javascript_tag "
+      var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
+      searcher.search();
+    "%> 
+ </div>
+ 
+ <div class="col-lg-4" style="padding-top:20px; line-height:25px;"> 
+ <p> <strong><%= @user.first_name + " " + @user.last_name %></strong></p>
+ <p><strong> <%= @user.email_address %></strong></p>
+ <p><strong> <%= @user.affiliation %></strong></p> 
+
+     
+ </div>
+ 
+ <div class="col-lg-5" style="margin-top:20px; padding:10px; line-height:25px; border:1px solid #CCC;"> 
+  <p><%= @user.description %> </p>
+  
+ </div>
+ 
+
+ 
+ 
+</div>
+
+<div class="panel-body">
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Instrument - Level
+        </div>
+        <div class="panel-body panel-height-custom">
+          Affil 1<br/>
+          Affil 2<br/>
+          Affil 3<br/>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+          Genres
+        </div>
+        <div class="panel-body panel-height-custom">
+          <% @user.genres.each do |genre|%>
+              <div><%= genre.name %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Activities 
+        </div>
+        <div class="panel-body panel-height-custom">
+          <% @user.activities.each do |activity| %>
+              <div><%= activity.name %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">Interests</div>
+        <div class="panel-body panel-height-custom">
+          <% @user.interests.each do |interest|%>
+              <div><%= interest.name %></div>
+          <% end %>  
+        </div>
+      </div>
+            
+    </div>
+        
+        
+        
+        
+  </div>
+
+  
+
+
+  
+  
+  <!--<div class="panel-footer text-right">   <input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.open('index.html')" value="Save"> <input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.open('index.html')" value="Cancel"></div>-->
+</div> 
+
+
+<!-- Page here --> 
+
+
+
+
+
+</div>
+</div>
+</div>
+
+<!-- Body Section Ends Here --> 
+
+
+
+<!-- Footer Section Starts Here --> 
+<div class="container-fluid"> 
+<div class="row">
+<div class="col-lg-12 text-center"  style="height:50px; background-color:#eb6864; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
+</div>
+</div>
+<!-- Footer Section Ends Here --> 
+
+
+
+
+  
+    
+
+
+    
+</body>
+</html>                                   

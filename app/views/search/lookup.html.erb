@@ -128,6 +128,9 @@
             $('#resultsHeader').hide();
             $('#resultsTableDiv').hide();
             console.log(data.message);
+            var searchButton = document.getElementById('searchButton');
+            console.log(searchButton);
+            searchButton.setAttribute('title', data.message);
         }
     });
         searcher.submitForm();

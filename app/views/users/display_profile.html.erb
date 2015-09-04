@@ -90,9 +90,9 @@
            Instrument - Level
         </div>
         <div class="panel-body panel-height-custom">
-          Affil 1<br/>
-          Affil 2<br/>
-          Affil 3<br/>
+          <% @instruments.each do |ins| %>
+            <div><%= ins + " - " + @instrumentLevelHash[ins.to_sym] %></div>
+          <% end %>
         </div>
       </div>
     </div>

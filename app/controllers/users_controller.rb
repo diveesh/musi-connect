@@ -26,9 +26,30 @@ class UsersController < ApplicationController
         if params[:id] != nil
             @id = params[:id]
             @user = User.find(params[:id])
+            userInstrumentSkills = InstrumentSkill.where(:user_id => @user.id)
+            @instruments = Array.new
+            @instrumentLevelHash = Hash.new
+            if userInstrumentSkills != nil
+                userInstrumentSkills.each do |skill|
+                    ins = Instrument.find(skill.instrument_id)
+                    @instruments << ins.name
+                    @instrumentLevelHash[ins.name.to_sym] = skill.level
+                end
+            end
+            
         else
             if session[:curr_user_id] != nil
                 @user = User.find(session[:curr_user_id])
+                userInstrumentSkills = InstrumentSkill.where(:user_id => @user.id)
+                @instruments = Array.new
+                @instrumentLevelHash = Hash.new
+                if userInstrumentSkills != nil
+                    userInstrumentSkills.each do |skill|
+                        ins = Instrument.find(skill.instrument_id)
+                        @instruments << ins.name
+                        @instrumentLevelHash[ins.name.to_sym] = skill.level
+                    end
+                end
             else
                 redirect_to ({controller: "welcome", action: "index"})
             end
@@ -54,7 +75,6 @@ class UsersController < ApplicationController
             if userInstrumentSkills != nil
                 @instrumentLevelHash = Hash.new
                 userInstrumentSkills.each do |skill|
-                    puts skill.level, skill.instrument_id
                     @instrumentLevelHash[skill.instrument_id.to_s.to_sym] = skill.level
                 end
             end

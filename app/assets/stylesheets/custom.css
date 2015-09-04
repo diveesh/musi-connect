@@ -1,3 +1,51 @@
+body {
+   padding-top: 60px;
+   font-family: 'Roboto Slab', serif;
+   font-size:14px;
+   line-height:25px;
+   }
+   
+.logo {
+	font-family: 'Dancing Script', cursive; 
+	color:#eb6864 !important; 
+	font-size:35px;
+	}
+
+.profile-title {
+	font-family: 'Josefin Slab', serif; color:#000;
+	font-size:22px;
+	font-weight:bold;
+	color:#eb6864;
+		 }
+.profile-sub-title {
+	font-family: 'Roboto Slab', serif;
+	line-height:30px;
+	font-size: 15px;
+	
+	}
+.home-caption-btn {
+	font-size:35px; 
+	line-height:70px;  
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	border-radius: 5px; 
+	background-color: rgba(245, 245, 245, 0.9);  
+	font-family: 'Josefin Slab', serif; color:#000;
+	}
+.footer-bar {
+	height:50px; 
+	background-color:#eb6864; 
+	padding-top:15px;
+	}
+.color-pink {
+	color:#eb6864 !important;
+	}
+.panel-heading-lg {
+	font-size:22px !important; 
+	line-height:35px;
+	}
+
+
 #login-modal .modal-dialog {
     width: 350px;
 }
@@ -159,11 +207,11 @@
 }
 
 .nohighlight:focus {
-     outline:none;  
+     outline:none !important;  
 }
 
 .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:visited {
-    color: #9d9d9d;
+	color: #9d9d9d;
     background-color: transparent;
 }
 
@@ -177,28 +225,31 @@
     cursor: pointer;   
 }
 
-.panel-heading span {
-    margin-top: -20px;
-    font-size: 14px;
+.panel-heading  {
+	
+	font-size: 14px;
 }
 
 .panel-title {
-    font-size: 14px;
-    color: #FFF;
+	font-size: 14px;
+	color: #FFF;
 }
 
 .panel-body {
-    font-size: 12px;
-}
-.panel-default > .panel-heading-custom {
-    background: #eb6864; border-color: #fff; 
-}
-.panel-height-custom {
-        height:150px;
-        overflow-y:scroll;
+	font-weight:normal;
+	font-size:12px;
 }
 
-.tooltip {
+.panel-height-custom {
+	    height:150px;
+	    overflow-y:scroll;
+}
+
+.panel-body  label { 
+font-size:14px;
+}
+
+.tooltip > .tooltip-inner {
       background-color: #000; 
       color: #FFF; 
       border: 1px solid #000; 
@@ -214,3 +265,23 @@
 .wd250 {
     width:250px;
 }
+
+<!-- Custom Style for Search Results Table --> 
+.table-fixed thead {
+  width: 100%;
+}
+.table-fixed tbody {
+  height: 250px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+ }
+
+.table-fixed thead th { background-color:#CCC !important; }
+<!-- Custom Style for Search Results Table --> 

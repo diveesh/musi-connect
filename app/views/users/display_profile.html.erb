@@ -40,36 +40,43 @@
   
   
 <div class="panel-body"> 
-
-<div class="col-lg-3" style="padding:10px 10px 10px 25px;;"> 
-<div id="photo_section"></div>
-    <%= javascript_tag "
-    var callback = function(user) {
-      var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
-      var newImg = document.createElement('img');
-      newImg.src = file_name;
-      newImg.setAttribute('id', 'profile_picture');
-      document.getElementById('photo_section').appendChild(newImg);
-    }
-    "%>
-    <%= javascript_tag "
-      var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
-      searcher.search();
-    "%> 
- </div>
- 
- <div class="col-lg-4" style="padding-top:20px; line-height:25px;"> 
- <p> <strong><%= @user.first_name + " " + @user.last_name %></strong></p>
- <p><strong> <%= @user.email_address %></strong></p>
- <p><strong> <%= @user.affiliation %></strong></p> 
-
-     
- </div>
- 
- <div class="col-lg-5" style="margin-top:20px; padding:10px; line-height:25px; border:1px solid #CCC;"> 
-  <p><%= @user.description %> </p>
-  
- </div>
+   <div class="col-lg-3" > 
+    <div id="photo_section"></div>
+      <%= javascript_tag "
+      var callback = function(user) {
+        var file_name = user.photo_file_name == null ? '" + asset_path('images/default.png') + "' : '" + asset_path(@user.photo_file_name) + "';
+        var newImg = document.createElement('img');
+        newImg.src = file_name;
+        newImg.setAttribute('id', 'profile_picture');
+        document.getElementById('photo_section').appendChild(newImg);
+      }
+      "%>
+      <%= javascript_tag "
+        var searcher = new Searcher('photo_section', null, '/users/get_picture/', \"" + @user.id.to_s  + "\", callback);
+        searcher.search();
+      "%>  
+   </div>
+   
+   <div class="col-lg-3" > 
+   <p class="profile-title"><%= @user.first_name + " " + @user.last_name %></p>
+   <p class="profile-sub-title"> <span class="glyphicon glyphicon-envelope" > </span> <%= @user.email_address %></p>
+   <p class="profile-sub-title"> <span class="glyphicon glyphicon-comment" > </span> <%= @user.affiliation %></p> 
+   </div>
+   
+   <div class="col-lg-2" >
+   </div>
+   
+   <div class="col-lg-4 " >
+   <div class="panel panel-default">
+          <div class="panel-heading"><strong>
+             Description
+            </strong></div>
+          <div class="panel-body ">
+            <p><%= @user.description %></p>
+          </div>
+        </div>
+   
+   </div>
  
 
  

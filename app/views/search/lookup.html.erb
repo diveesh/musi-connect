@@ -91,7 +91,7 @@
 <!-- Page here --> 
 
 
-<div class="text-center" hidden style="font-size:20px; padding:10px;  background-color:#999" id="resultsHeader">   Your Search Results   </div> 
+<!-- <div class="text-center" hidden style="font-size:20px; padding:10px;  background-color:#999" id="resultsHeader">   Your Search Results   </div> 
   
   <div class="table-responsive" hidden id="resultsTableDiv">
     <table class="table" style="scroll" id="resultsTable">
@@ -106,7 +106,30 @@
         <tbody id="resultsBody">
         </tbody>
     </table>
-  </div>
+  </div> -->
+
+
+    <div class="panel panel-default" id="resultsTableDiv" hidden>
+        <div class="panel-heading text-center panel-heading-lg" id="resultsHeader">
+           
+            Your Search Results
+           
+        </div>
+        <table  class="table table-fixed table-hover table-striped" id="resultsTable">
+          <thead>
+            <tr>
+              <th class="col-lg-1">###</th>
+              <th class="col-lg-3">Name</th>
+              <th class="col-lg-3">Email</th>
+              <th class="col-lg-5">Instruments</th>
+            </tr>
+          </thead>
+          
+          <tbody id="resultsBody">
+            <!-- Results Filled in here via AJAX call to '/search/user_search' API -->
+          </tbody>
+        </table>
+      </div>
   
   
   
@@ -119,12 +142,10 @@
 </div>
     <%= javascript_tag " var searcher = new Searcher('result', 'searchForm', '/search/user_search', null, function(data) {
         if (data.status === 'SUCCESS') {
-            $('#resultsHeader').show();
             $('#resultsTableDiv').show();
             fillResultsTable('resultsBody', 'resultsTable', data.data);
         } else {
             $('#resultsBody').empty();
-            $('#resultsHeader').hide();
             $('#resultsTableDiv').hide();
             console.log(data.message);
             var searchButton = document.getElementById('searchButton');

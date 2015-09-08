@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
     validates :password, length: { minimum: 8 }, allow_nil: true
     validates_format_of :email_address, :with => /@/
-    validates_presence_of :affiliation, :on => :update
+    validates_presence_of :affiliation, :on => :create
 
     
     AFFILIATIONS = ['Stanford School of Medicine', 'Stanford Hospital', 'Lucille Packard Hospital', 'Stanford Medicine Alumni']

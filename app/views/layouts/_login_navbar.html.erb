@@ -12,15 +12,15 @@
         <span class="icon-bar"></span>   
       </button>
       
-      <a style="font-family: 'Dancing Script', cursive; color:#eb6864; font-size:35px;" class="navbar-brand" href="/welcome/index">Musiconnect</a>
+      <a style="font-family: 'Dancing Script', cursive; color:#eb6864; font-size:35px;" class="navbar-brand" href="/welcome/index">Stanford Musiconnect</a>
       
       <div class="collapse navbar-collapse" id="myNavbar" >
       
       <ul class="nav navbar-nav navbar-right">
         
         
-        <li><a href="/search/lookup"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-    <li><a href="/users/display_profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+        <li id="search"><a href="/search/lookup"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+    <li id="myProfile"><a href="/users/display_profile"><span class="glyphicon glyphicon-music"></span> My Profile</a></li>
         <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                  <span class="glyphicon glyphicon-user"></span> <%= @user.first_name + " " + @user.last_name%> <span class="caret"></span>
@@ -33,6 +33,20 @@
         </li>
         
       </ul>
+
+      <%= javascript_tag "
+        var myProfile = " + (@user.id == session[:curr_user_id]).to_s + ";
+        var path = window.location.pathname;
+        var page = path.split('/').pop();
+        var id = null;
+        if (page === 'lookup') {
+          id = 'search';
+        } else if (page === 'display_profile' && myProfile) {
+          id = 'myProfile';
+        }
+        $('#' + id).css('background-color', '#ff0000');
+        $('#' + id + ' a').css('color', 'black');
+      "%>
   
             
             

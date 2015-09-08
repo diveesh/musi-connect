@@ -2,7 +2,10 @@
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/custom.css')) %>
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/users.css')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
-<%= render 'layouts/login_navbar' %>
+
+<% if session[:curr_user_id] == @user.id %>
+  <%= render 'layouts/login_navbar' %>
+<% end %>
 <!-- Body Section Starts Here --> 
 
 
@@ -19,7 +22,7 @@
 <!--- page here -->
 
 <div class="panel panel-default">  
-  <div class="panel-heading text-center">  <span style="font-size:25px; line-height:30px;" class="text-center"> Profile  </span>
+  <div class="panel-heading text-center">  <span style="font-size:25px; line-height:30px;" class="text-center"> <%= session[:curr_user_id] == @user.id ? "My Profile" : "Profile" %> </span>
     <%  if session[:curr_user_id] == @user.id %>
       <div class="pull-right">
         <button type="button" onClick="location.href='/users/edit_profile';" class="btn btn-default btn-md">
@@ -77,8 +80,6 @@
         </div>
    
    </div>
- 
-
  
  
 </div>
@@ -161,11 +162,7 @@
 
 
 <!-- Footer Section Starts Here --> 
-<div class="container-fluid"> 
-<div class="row">
-<div class="col-lg-12 text-center"  style="height:50px; background-color:#eb6864; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
-</div>
-</div>
+<%= render 'layouts/footer' %>
 <!-- Footer Section Ends Here --> 
 
 

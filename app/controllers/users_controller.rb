@@ -120,8 +120,6 @@ class UsersController < ApplicationController
                 user.activities << Activity.find(id)
             end
         end
-        
-        user.affiliation = params[:user][:affiliation]
         desc = params[:user][:description]
         if desc != nil
             user.description = desc
@@ -149,6 +147,7 @@ class UsersController < ApplicationController
             new_user.password = params[:user][:password]
             new_user.password_confirmation = params[:user][:confirm_password]
             new_user.email_address = params[:user][:email_address]
+            new_user.affiliation = params[:user][:affiliation]
             photo = params[:user][:picture]
             if photo != nil
                 if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
@@ -183,9 +182,10 @@ class UsersController < ApplicationController
             user.first_name = params[:user][:first_name]
             user.last_name = params[:user][:last_name]
             user.email_address = params[:user][:email_address]
+            user.affiliation = params[:user][:affiliation]
             photo = params[:user][:picture]
             if photo != nil
-                if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
+                if photo.original_filename[-3..-1].downcase != 'png' && photo.original_filename[-3..-1].downcase != 'jpg' && photo.original_filename[-4..-1].downcase != 'jpeg'  && photo.original_filename[-3..-1].downcase != 'gif'
                     flash[:err] = "Photo must be of jpg, png or gif format."
                     redirect_to({action: "edit_account_info"})
                     return
@@ -198,7 +198,7 @@ class UsersController < ApplicationController
                 user.photo_file_name = obj.key
             end
             if !user.save()
-                flash[:error_messages] = new_user.errors.full_messages
+                flash[:error_messages] = user.errors.full_messages
                 redirect_to({action: "edit_account_info"})
             else
                 flash[:error_messages] = nil

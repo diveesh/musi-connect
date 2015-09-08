@@ -16,7 +16,7 @@
 <div class="col-lg-8"> 
 
 <div class="panel panel-default">  
-  <div class="panel-heading text-center"><span style="font-size:25px; line-height:50px;" class="text-center">  Edit Your Account  </span></div>
+  <div class="panel-heading text-center"><span style="font-size:25px; line-height:50px;" class="text-center">  Edit My Account  </span></div>
 
   
   <%= form_for @user, url: "post_edit_user", :html => {:class => "form-horizontal", :role => "form", :style => "padding-left:20px; padding-right:20px;"} do |f|%>
@@ -30,6 +30,13 @@
         <%= flash[:err] %>
       <% end %>    
     </p>
+
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Login Name</label>
+      <div col-sm-8>
+        <%= f.label @user.login_name %>
+      </div>
+    </div>
     
     <div class="form-group">
       <label class="col-sm-4 control-label">First Name</label>
@@ -51,7 +58,15 @@
       <div >
         <%= f.text_field :email_address %>
       </div>
-    </div>        
+    </div>   
+
+    <div class="form-group">
+      <label class="col-sm-4 control-label">Affiliation</label>
+      <div >
+        <%= f.collection_select :affiliation, User::AFFILIATIONS, :to_s, :to_s, 
+       :include_blank => false, :selected => @user.affiliation, :prompt => "Select your affiliation..." %>
+      </div>
+    </div>      
     
      <div class="form-group">
     <label  class="col-sm-4 control-label" for="exampleInputFile">Profile Picture </label> 
@@ -100,12 +115,5 @@
 
 
 <!-- Footer Section Starts Here --> 
-<div class="container-fluid"> 
-<div class="row">
-<div class="col-lg-12 text-center"  style="height:50px; background-color:#bd2031; padding-top:15px;"> &copy; All Rights Reserved @ MUSICONNECT - 2015 </div>
-</div>
-</div>
-<!-- Footer Section Ends Here --> 
-
-
-<%=render 'layouts/login_modal' %>                                  
+<%= render 'layouts/footer' %>
+<!-- Footer Section Ends Here -->                                 

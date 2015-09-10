@@ -18,75 +18,94 @@
 
 <!--- page here -->
 
-<div class="panel panel-default" >  
-  <div class="panel-heading  text-center clearfix"> <span style="font-size:25px; line-height:30px;" class="text-center">  Select Your Search Criteria </span> 
-<%= form_for :search, url: "user_search", method: :post, :html => {:id => "searchForm"} do |f| %>
-  </div>
-    <div class="panel-body">
-        <div class="col-md-3">
-          <div class="panel panel-default">
-            <div class="panel-heading panel-heading-default">
-             Affiliation 
-            </div>
-              <div class="panel-body panel-height-custom">
-                <% User::AFFILIATIONS.each do |aff|%>
-                    <div><%= check_box_tag "affiliations[]", aff %>
-                    <%= f.label aff.titleize %></div>
-                <% end %>
+<div class="panel panel-default" > 
+    <p style="padding:20px 0px 20px 0px;" class="text-center text-danger" id="errorMessage"><p> 
+        <div class="panel-heading  text-center clearfix"> <span style="font-size:25px; line-height:30px;" class="text-center">  Select Your Search Criteria </span> 
+        <%= form_for :search, url: "user_search", method: :post, :html => {:id => "searchForm"} do |f| %>
+          </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <button type="button" onClick="$('.affiliationBox').removeAttr('checked');" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                        </button>
+                    </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-default">
+                     Affiliation 
+                    </div>
+                      <div class="panel-body panel-height-custom">
+                        <% User::AFFILIATIONS.each do |aff|%>
+                            <div><%= check_box_tag "affiliations[]", aff, false, :class => "affiliationBox" %>
+                            <%= f.label aff.titleize %></div>
+                        <% end %>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading panel-heading-default">
-                    Instruments 
-              </div>
-                <div class="panel-body panel-height-custom">
-                    <% @instruments.each do |ins| %>
-                        <div><%= check_box_tag "instruments[]", ins.id %>
-                        <%= f.label ins.name %></div>
-                    <% end %>      
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <button type="button" onClick="$('.instrumentBox').removeAttr('checked');" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                        </button>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-heading-default">
+                            Instruments 
+                      </div>
+                        <div class="panel-body panel-height-custom">
+                            <% @instruments.each do |ins| %>
+                                <div><%= check_box_tag "instruments[]", ins.id, false, :class => "instrumentBox" %>
+                                <%= f.label ins.name %></div>
+                            <% end %>      
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading panel-heading-default">
-                     Genre 
-              </div>
-                <div class="panel-body panel-height-custom">
-                    <% @genres.each do |g| %>
-                        <div><%= check_box_tag "genres[]", g.id %>
-                        <%= f.label g.name %></div>
-                    <% end %>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <button type="button" onClick="$('.genreBox').removeAttr('checked');" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                        </button>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-heading-default">
+                             Genre 
+                      </div>
+                        <div class="panel-body panel-height-custom">
+                            <% @genres.each do |g| %>
+                                <div><%= check_box_tag "genres[]", g.id, false, :class => "genreBox" %>
+                                <%= f.label g.name %></div>
+                            <% end %>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3" >
-            <div class="panel panel-default">
-                <div class="panel-heading panel-heading-default">
-                     Interests 
+                <div class="col-md-3" >
+                      <div class="text-center">
+                        <button type="button" onClick="$('.interestBox').removeAttr('checked');" class="btn btn-default btn-md">
+                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                        </button>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading panel-heading-default">
+                             Interests 
+                        </div>
+                        <div class="panel-body panel-height-custom">
+                            <% @interests.each do |i| %>
+                                <div><%= check_box_tag "interests[]", i.id, false, :class => "interestBox" %>
+                                <%= f.label i.name %></div>
+                            <% end %>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="panel-body panel-height-custom">
-                    <% @interests.each do |a| %>
-                        <div><%= check_box_tag "interests[]", a.id %>
-                        <%= f.label a.name %></div>
-                    <% end %>
-                </div>
+            <div class="panel-footer text-right"> 
+                <%= f.submit "Search", :class => "btn btn-md btn-danger ", :role => "button", :id => "searchButton"%>
+            <% end %>
+                <input type="submit" class="btn btn-md btn-danger " role="button" onClick="$('input:checkbox').removeAttr('checked');" value="Clear">
             </div>
-            
-        </div>
-        
-        
-    <div class="panel-footer text-right"> 
-        <%= f.submit "Search", :class => "btn btn-md btn-danger ", :role => "button", :id => "searchButton"%>
-    <% end %>
-        <input type="submit" class="btn btn-md btn-danger " role="button" onClick="$('input:checkbox').removeAttr('checked');" value="Clear">
-    </div>
-                
-    </div>
- 
-    </div> 
+                        
+            </div>
+         
+            </div> 
 
 <!-- Page here --> 
 
@@ -127,14 +146,13 @@
     <%= javascript_tag " var searcher = new Searcher('result', 'searchForm', '/search/user_search', null, function(data) {
         if (data.status === 'SUCCESS') {
             $('#resultsTableDiv').show();
+            $('p#errorMessage').text('');
             fillResultsTable('resultsBody', 'resultsTable', data.data);
         } else {
             $('#resultsBody').empty();
             $('#resultsTableDiv').hide();
-            console.log(data.message);
-            var searchButton = document.getElementById('searchButton');
-            console.log(searchButton);
-            searchButton.setAttribute('title', data.message);
+            console.log(data.message); 
+            $('p#errorMessage').text(data.message);
         }
     });
         searcher.submitForm();

@@ -28,6 +28,10 @@ class SearchController < ApplicationController
                 @users = @users & User.joins(:activities).where("activities.id" => params[:activities]).to_set
                 filtered = true
             end
+            if params[:interests] != nil
+                @users = @users & User.joins(:interests).where("interests.id" => params[:interests]).to_set
+                filtered = true
+            end
             if params[:affiliations] != nil
                 @users = @users & User.where("affiliation" => params[:affiliations]).to_set
                 filtered = true

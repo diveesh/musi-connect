@@ -1,3 +1,4 @@
+require 'securerandom'
 class UsersController < ApplicationController
 
     def post_login_ajax
@@ -61,7 +62,60 @@ class UsersController < ApplicationController
         redirect_to ({controller: "welcome", action: "index"})
     end
 
+    def reset_password
+        if params[:user][:login_name] != nil
+            user = User.find_by_login_name(params[:user][:login_name])
+            if user != nil
+                password = SecureRandom.base64
+                user.password = password
+                user.send_password_change_email(password)
+                user.save()
+                redirect_to({action: "password_reset_success"})
+            else
+                flash[:err] = "Sorry, we could not find that username in the database."
+                redirect_to({action: "forgot_password"})
+            end
+        else
+            flash[:err] = "Please enter a username"
+            redirect_to({action: "forgot_password"})
+        end
+        
+    end
+
+    def forgot_password
+    end
+
+    def password_reset_success
+    end
+
     def new
+    end
+
+    def change_password
+        if session[:curr_user_id] != nil
+            @user = User.find(session[:curr_user_id])
+        else
+            redirect_to({controller: "welcome", action: "index"})
+        end
+    end
+
+    def post_change_password
+        @user = User.find(session[:curr_user_id])
+        old_password = params[:old_password]
+        if @user.password_valid?(old_password)
+            @user.password = params[:new_password]
+            @user.password_confirmation = params[:new_password_confirmation]
+            if !@user.save()
+                flash[:error_messages] = @user.errors.full_messages
+                redirect_to({action: "change_password"})
+            else
+                flash[:err] = nil
+                redirect_to({action: "display_profile"})
+            end
+        else
+            flash[:err] = "Old password incorrect"
+            redirect_to({action: "change_password"})
+        end
     end
 
     def edit_profile
@@ -139,7 +193,8 @@ class UsersController < ApplicationController
 
     def create
         existing_user = User.find_by_login_name(params[:user][:login_name])
-        if existing_user == nil
+        existing_user_email = User.find_by_email_address(params[:user][:email_address])
+        if existing_user == nil && existing_user_email == nil
             new_user = User.new()
             new_user.first_name = params[:user][:first_name]
             new_user.last_name = params[:user][:last_name]
@@ -152,7 +207,7 @@ class UsersController < ApplicationController
             if photo != nil
                 if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
                     flash[:err] = "Photo must be of jpg, png or gif format."
-                    redirect_to({action: "new"})
+                    render :action=>'new'
                     return
                 end
                 obj = S3_BUCKET.objects['images/' + new_user.login_name + photo.original_filename]
@@ -164,14 +219,14 @@ class UsersController < ApplicationController
             end
             if !new_user.save()
                 flash[:error_messages] = new_user.errors.full_messages
-                redirect_to({action: "new"})
+                render :action=>'new'
             else
                 flash[:error_messages] = nil
                 session[:curr_user_id] = new_user.id
                 redirect_to ({action: "edit_profile"})  
             end      
         else
-            flash[:err] = "That login name has already been taken. Please choose another one"
+            flash[:err] = "That login name or email address has already been taken. Please choose another one"
             redirect_to({action: "new"})
         end
     end

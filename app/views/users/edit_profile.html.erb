@@ -2,6 +2,9 @@
 <% content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/template.css')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/utils.js')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
+<% content_for :javascript, (javascript_include_tag asset_path('javascripts/custom.js')) %>
+<% content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/custom.css')) %>
+<% content_for :title, "Edit Profile" %>
 
 <%=render 'layouts/login_navbar'%>   
 
@@ -66,7 +69,7 @@
  <div class="col-lg-4 " >
  <div class="panel panel-default">
         <div class="panel-heading">
-        <strong>Description</strong> </div>
+        <strong>MusiConnect Headline</strong> </div>
         <div class="panel-body ">
                     <%= f.text_area(:description, rows: 5, :id => "comment") %>
         </div>
@@ -86,7 +89,7 @@
         </div>
         <div class="panel-body panel-height-custom">
         <% @instruments.each do |ins| %>
-          <div><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
+          <div style="width:500px"><%= check_box_tag "instruments[]", ins.id, (@user.instruments.include? ins), :id => "instrument" + ins.id.to_s %>
           <%= f.label ins.name %>
           <%= select_tag(("level_for_ins" + ins.id.to_s).to_sym, options_for_select(InstrumentSkill::LEVEL_ANCHORS, @instrumentLevelHash[ins.id.to_s.to_sym]), :hidden => (!@user.instruments.include? ins), :id => "level_selector" + ins.id.to_s) %></div>
           <%= javascript_tag "
@@ -119,7 +122,7 @@
         </div>
         <div class="panel-body panel-height-custom">
         <% @activities.each do |a| %>
-          <div id="activity<%=a.id%>"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
+          <div id="activity<%=a.id%>" style="width:500px"><%= check_box_tag "activities[]", a.id, (@user.activities.include? a) %>
           <%= f.label a.name %></div>
         <% end %>
         </div>

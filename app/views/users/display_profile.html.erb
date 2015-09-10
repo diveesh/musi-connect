@@ -2,13 +2,12 @@
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/custom.css')) %>
 <%= content_for :stylesheet, (stylesheet_link_tag asset_path('stylesheets/users.css')) %>
 <% content_for :javascript, (javascript_include_tag asset_path('javascripts/searcher.js')) %>
+<% content_for :title, "Display Profile" %>
 
 <% if session[:curr_user_id] == @user.id %>
   <%= render 'layouts/login_navbar' %>
 <% end %>
 <!-- Body Section Starts Here --> 
-
-
 
 
 
@@ -39,7 +38,7 @@
       </div>
     <% end %>
   
-     </div>
+    </div>
   
   
 <div class="panel-body"> 
@@ -72,7 +71,7 @@
    <div class="col-lg-4 " >
    <div class="panel panel-default">
           <div class="panel-heading"><strong>
-             Description
+             MusiConnect Headline
             </strong></div>
           <div class="panel-body ">
             <p><%= @user.description %></p>

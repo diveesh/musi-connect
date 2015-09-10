@@ -22,7 +22,7 @@
     <p style="padding:20px 0px 20px 0px;" class="text-center text-danger"> 
       <% if flash[:error_messages] != nil %>
         <% flash[:error_messages].each do |msg| %>
-          <div><%= msg %></div>
+          <%= msg %>
         <% end %>
       <% end %>
       <% if flash[:err] != nil %>

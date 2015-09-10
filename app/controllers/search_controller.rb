@@ -14,7 +14,7 @@ class SearchController < ApplicationController
     def user_search
         if session[:curr_user_id] != nil
             flash[:error_messages] = []
-            @users = User.all.to_set - Set.new.add(User.find(session[:curr_user_id]))
+            @users = User.order(:first_name).to_set - Set.new.add(User.find(session[:curr_user_id]))
             filtered = false
             if params[:instruments] != nil
                 @users = @users & User.joins(:instruments).where("instruments.id" => params[:instruments]).to_set

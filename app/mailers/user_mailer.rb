@@ -5,4 +5,10 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(to: 'diveesh@gmail.com', subject: 'Someone just joined Stanford MusiConnect!')
   end
+
+  def password_change_notification(user, password)
+    @user = user
+    @password = password
+    mail(to: user.email_address, subject: 'Password Reset')
+  end
 end

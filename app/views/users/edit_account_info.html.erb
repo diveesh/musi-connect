@@ -16,7 +16,14 @@
 <div class="col-lg-8"> 
 
 <div class="panel panel-default">  
-  <div class="panel-heading text-center"><span style="font-size:25px; line-height:50px;" class="text-center">  Edit My Account  </span></div>
+  <div class="panel-heading text-center"><span style="font-size:25px; line-height:50px;" class="text-center">  Edit My Account  </span>
+    <div class="pull-right">
+        <button type="button" onClick="location.href='/users/change_password';" class="btn btn-default btn-md">
+          <span class="glyphicon glyphicon-edit"  aria-hidden="true"></span> Change Password
+        </button>
+
+      </div>
+  </div>
 
   
   <%= form_for @user, url: "post_edit_user", :html => {:class => "form-horizontal", :role => "form", :style => "padding-left:20px; padding-right:20px;"} do |f|%>

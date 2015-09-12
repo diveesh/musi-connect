@@ -71,7 +71,7 @@
         <div class="panel-heading">
         <strong>MusiConnect Headline</strong> </div>
         <div class="panel-body ">
-                    <%= f.text_area(:description, rows: 5, :id => "comment") %>
+          <%= f.text_area(:description, rows: 5, :id => "comment") %>
         </div>
       </div>
  
@@ -146,19 +146,65 @@
         
   </div>
 
-  
+  <div class="panel-body">
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Other Instrument Info
+        </div>
+        <div class="panel-body panel-height-custom">
+          <%= f.text_area(:instrument_info, rows: 5, :id => "comment") %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+          Other Genre Info
+        </div>
+        <div class="panel-body panel-height-custom">
+          <%= f.text_area(:genre_info, rows: 5, :id => "comment") %>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Other Activities
+        </div>
+        <div class="panel-body panel-height-custom">
+          <%= f.text_area(:activity_info, rows: 5, :id => "comment") %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Other Interests
+        </div>
+        <div class="panel-body panel-height-custom">
+          <%= f.text_area(:interest_info, rows: 5, :id => "comment") %>
+        </div>
+      </div>
+            
+    </div>
+        
+        
+  </div>
 
 
   
   
    <div class="panel-footer text-right">
-   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button" %> </div> 
-</div> 
+   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button" %> 
+ 
 <% end %>
+<input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.location.href='/users/display_profile';" value="Cancel"></div> 
 
 <!-- Page here --> 
 
-
+</div>
 
 
 

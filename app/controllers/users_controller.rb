@@ -178,6 +178,24 @@ class UsersController < ApplicationController
         if desc != nil
             user.description = desc
         end
+
+        instrument_info = params[:user][:instrument_info]
+        if instrument_info != nil
+            user.instrument_info = instrument_info
+        end
+        genre_info = params[:user][:genre_info]
+        if genre_info != nil
+            user.genre_info = genre_info
+        end
+        activity_info = params[:user][:activity_info]
+        if activity_info != nil
+            user.activity_info = activity_info
+        end
+        interest_info = params[:user][:interest_info]
+        if interest_info != nil
+            user.interest_info = interest_info
+        end
+
         if !user.save()
             flash[:error_messages] = user.errors.full_messages
             redirect_to({action: "edit_profile"})

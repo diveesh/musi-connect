@@ -197,7 +197,7 @@
   
   
    <div class="panel-footer text-right">
-   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button" %> 
+   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button", :id => 'submitButton' %> 
  
 <% end %>
 <input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.location.href='/users/display_profile';" value="Cancel"></div> 
@@ -215,9 +215,15 @@
 <%= javascript_tag "
   $('#editProfileForm').data('serialize',$('#editProfileForm').serialize()); // On load save form current state
 
-  $(window).bind('beforeunload', function(e){
+  var checkFormChange = function(e){
       if($('#editProfileForm').serialize()!=$('#editProfileForm').data('serialize'))return 'Form changes detected.';
       else e=null; // i.e; if form state change show warning box, else don't show it.
+  };
+
+  $(window).bind('beforeunload', checkFormChange);
+
+  $('#submitButton').on('click', function() {
+    $(window).unbind('beforeunload', checkFormChange);
   });
 "%>
 

@@ -153,7 +153,7 @@
            Other Instrument Info
         </div>
         <div class="panel-body panel-height-custom">
-          <%= f.text_area(:instrument_info, rows: 5, :id => "comment") %>
+          <%= f.text_area(:instrument_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your instruments here") %>
         </div>
       </div>
     </div>
@@ -163,7 +163,7 @@
           Other Genre Info
         </div>
         <div class="panel-body panel-height-custom">
-          <%= f.text_area(:genre_info, rows: 5, :id => "comment") %>
+          <%= f.text_area(:genre_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your genres here") %>
           
         </div>
       </div>
@@ -174,7 +174,7 @@
            Other Activities Info
         </div>
         <div class="panel-body panel-height-custom">
-          <%= f.text_area(:activity_info, rows: 5, :id => "comment") %>
+          <%= f.text_area(:activity_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your activities here") %>
         </div>
       </div>
     </div>
@@ -184,7 +184,7 @@
            Other Interests Info
         </div>
         <div class="panel-body panel-height-custom">
-          <%= f.text_area(:interest_info, rows: 5, :id => "comment") %>
+          <%= f.text_area(:interest_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your interests here") %>
         </div>
       </div>
             
@@ -197,10 +197,10 @@
   
   
    <div class="panel-footer text-right">
-   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger ", :role => "button", :id => 'submitButton' %> 
+   <%= f.submit "Update Profile", :class => "btn btn-md btn-danger submitButton", :role => "button" %> 
  
 <% end %>
-<input type="submit" class="btn btn-md btn-danger " role="button" onClick="window.location.href='/users/display_profile';" value="Cancel"></div> 
+<input type="submit" class="btn btn-md btn-danger submitButton" role="button" onClick="window.location.href='/users/display_profile';" value="Cancel"></div> 
 
 <!-- Page here --> 
 
@@ -222,7 +222,7 @@
 
   $(window).bind('beforeunload', checkFormChange);
 
-  $('#submitButton').on('click', function() {
+  $('.submitButton').on('click', function() {
     $(window).unbind('beforeunload', checkFormChange);
   });
 "%>

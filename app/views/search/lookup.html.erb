@@ -25,14 +25,15 @@
           </div>
             <div class="panel-body">
                 <div class="col-md-3">
-                    <div class="text-center">
-                        <button type="button" onClick="$('.affiliationBox').removeAttr('checked');" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
-                        </button>
-                    </div>
+                    
                   <div class="panel panel-default">
                     <div class="panel-heading panel-heading-default">
                      Affiliation 
+                         <div class="pull-right">
+                            <button type="button" onClick="$('.affiliationBox').removeAttr('checked');" class="btn btn-default btn-md">
+                              <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                            </button>
+                        </div>
                     </div>
                       <div class="panel-body panel-height-custom">
                         <% User::AFFILIATIONS.each do |aff|%>
@@ -43,14 +44,15 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="text-center">
-                        <button type="button" onClick="$('.instrumentBox').removeAttr('checked');" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
-                        </button>
-                    </div>
+                    
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-default">
                             Instruments 
+                            <div class="pull-right">
+                                <button type="button" onClick="$('.instrumentBox').removeAttr('checked');" class="btn btn-default btn-md">
+                                    <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                                </button>
+                            </div>
                       </div>
                         <div class="panel-body panel-height-custom">
                             <% @instruments.each do |ins| %>
@@ -61,14 +63,15 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="text-center">
-                        <button type="button" onClick="$('.genreBox').removeAttr('checked');" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
-                        </button>
-                    </div>
+                    
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-default">
                              Genre 
+                             <div class="pull-right">
+                                <button type="button" onClick="$('.genreBox').removeAttr('checked');" class="btn btn-default btn-md">
+                                  <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                                </button>
+                            </div>
                       </div>
                         <div class="panel-body panel-height-custom">
                             <% @genres.each do |g| %>
@@ -79,14 +82,15 @@
                     </div>
                 </div>
                 <div class="col-md-3" >
-                      <div class="text-center">
-                        <button type="button" onClick="$('.interestBox').removeAttr('checked');" class="btn btn-default btn-md">
-                          <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
-                        </button>
-                    </div>
+                      
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-default">
                              Interests 
+                             <div class="pull-right">
+                                <button type="button" onClick="$('.interestBox').removeAttr('checked');" class="btn btn-default btn-md">
+                                  <span class="glyphicon glyphicon-minus"  aria-hidden="true"></span> Clear
+                                </button>
+                            </div>
                         </div>
                         <div class="panel-body panel-height-custom">
                             <% @interests.each do |i| %>

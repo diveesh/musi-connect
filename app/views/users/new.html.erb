@@ -70,9 +70,10 @@
     
      <div class="form-group">
       <label class="col-sm-4 control-label">Password</label>
-      <div >
-        <%= f.password_field :password %>
+      <div>
+        <%= f.password_field :password, :onClick => "$('#passwordMessage').show();" %>
       </div>
+      <div id="passwordMessage" class="text-center" hidden>Password must be at least 8 characters</div>
     </div>
     
      <div class="form-group">

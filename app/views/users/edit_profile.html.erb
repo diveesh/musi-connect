@@ -108,17 +108,31 @@
         </div>
         <div class="panel-body panel-height-custom">
         <% @genres.each do |g| %>
-        <div id="genre<%=g.id%>"><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
+        <div id="genre<%=g.id%>" style="width:500px"><%= check_box_tag "genres[]", g.id, (@user.genres.include? g) %>
         <%= f.label g.name %></div>
         <% end %>
           
         </div>
       </div>
     </div>
+    <div class="col-md-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Musical Interests 
+        </div>
+        <div class="panel-body panel-height-custom">
+          <% @interests.each do |i| %>
+            <div id="interest<%=i.id%>" style="width:500px"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
+            <%= f.label i.name %></div>
+          <% end %>
+        </div>
+      </div>
+            
+    </div>
     <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-default">
-           Activities 
+           Performance Support Activities 
         </div>
         <div class="panel-body panel-height-custom">
         <% @activities.each do |a| %>
@@ -127,20 +141,6 @@
         <% end %>
         </div>
       </div>
-    </div>
-    <div class="col-md-3" >
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-default">
-           Interests 
-        </div>
-        <div class="panel-body panel-height-custom">
-          <% @interests.each do |i| %>
-            <div id="interest<%=i.id%>"><%= check_box_tag "interests[]", i.id, (@user.interests.include? i) %>
-            <%= f.label i.name %></div>
-          <% end %>
-        </div>
-      </div>
-            
     </div>
         
         
@@ -168,16 +168,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-default">
-           Other Activities Info
-        </div>
-        <div class="panel-body panel-height-custom">
-          <%= f.text_area(:activity_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your activities here") %>
-        </div>
-      </div>
-    </div>
     <div class="col-md-3" >
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-default">
@@ -188,6 +178,17 @@
         </div>
       </div>
             
+    </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Other Activities Info
+        </div>
+        <div class="panel-body panel-height-custom">
+          <%= f.text_area(:activity_info, rows: 5, :id => "comment", :placeholder => "Feel free to elaborate on your activities here") %>
+        </div>
+      </div>
     </div>
         
         

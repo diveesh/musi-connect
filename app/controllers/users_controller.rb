@@ -37,7 +37,7 @@ class UsersController < ApplicationController
                     @instrumentLevelHash[ins.name.to_sym] = skill.level
                 end
             end
-            
+            @instruments.sort! { |x, y| x <=> y}
         else
             if session[:curr_user_id] != nil
                 @user = User.find(session[:curr_user_id])
@@ -49,8 +49,11 @@ class UsersController < ApplicationController
                         ins = Instrument.find(skill.instrument_id)
                         @instruments << ins.name
                         @instrumentLevelHash[ins.name.to_sym] = skill.level
+
                     end
+                    @instruments.sort! {|x, y| x <=> y}
                 end
+
             else
                 redirect_to ({controller: "welcome", action: "index"})
             end
@@ -121,10 +124,10 @@ class UsersController < ApplicationController
     def edit_profile
         if session[:curr_user_id] != nil
             @user = User.find(session[:curr_user_id])
-            @instruments = Instrument.all
-            @genres = Genre.all
-            @interests = Interest.all
-            @activities = Activity.all
+            @instruments = Instrument.order(:name)
+            @genres = Genre.order(:name)
+            @interests = Interest.order(:name)
+            @activities = Activity.order(:name)
             userInstrumentSkills = InstrumentSkill.where(:user_id => @user.id)
             if userInstrumentSkills != nil
                 @instrumentLevelHash = Hash.new
@@ -213,14 +216,14 @@ class UsersController < ApplicationController
         existing_user = User.find_by_login_name(params[:user][:login_name])
         existing_user_email = User.find_by_email_address(params[:user][:email_address])
         if existing_user == nil && existing_user_email == nil
-            new_user = User.new()
-            new_user.first_name = params[:user][:first_name]
-            new_user.last_name = params[:user][:last_name]
-            new_user.login_name = params[:user][:login_name]
-            new_user.password = params[:user][:password]
-            new_user.password_confirmation = params[:user][:confirm_password]
-            new_user.email_address = params[:user][:email_address]
-            new_user.affiliation = params[:user][:affiliation]
+            @user = User.new()
+            @user.first_name = params[:user][:first_name]
+            @user.last_name = params[:user][:last_name]
+            @user.login_name = params[:user][:login_name]
+            @user.password = params[:user][:password]
+            @user.password_confirmation = params[:user][:confirm_password]
+            @user.email_address = params[:user][:email_address]
+            @user.affiliation = params[:user][:affiliation]
             photo = params[:user][:picture]
             if photo != nil
                 if photo.original_filename[-3..-1] != 'png' && photo.original_filename[-3..-1] != 'jpg' && photo.original_filename[-4..-1] != 'jpeg'  && photo.original_filename[-3..-1] != 'gif'
@@ -228,19 +231,19 @@ class UsersController < ApplicationController
                     render :action=>'new'
                     return
                 end
-                obj = S3_BUCKET.objects['images/' + new_user.login_name + photo.original_filename]
+                obj = S3_BUCKET.objects['images/' + @user.login_name + photo.original_filename]
                 obj.write(
                   file: photo,
                   acl: :public_read
                 )
-                new_user.photo_file_name = obj.key
+                @user.photo_file_name = obj.key
             end
-            if !new_user.save()
-                flash[:error_messages] = new_user.errors.full_messages
+            if !@user.save()
+                flash[:error_messages] = @user.errors.full_messages
                 render :action=>'new'
             else
                 flash[:error_messages] = nil
-                session[:curr_user_id] = new_user.id
+                session[:curr_user_id] = @user.id
                 redirect_to ({action: "edit_profile"})  
             end      
         else

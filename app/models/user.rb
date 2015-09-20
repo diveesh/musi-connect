@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     validates_presence_of :affiliation, :on => :create
 
     
-    AFFILIATIONS = ['Stanford School of Medicine', 'Stanford Hospital', 'Lucille Packard Hospital', 'Stanford Medicine Alumni']
+    AFFILIATIONS = ['Stanford School of Medicine', 'Stanford Hospital', 'Lucille Packard Hospital', 'Stanford Medicine Alumni', 'Stanford University', 'Other']
 
 
     def password_valid?(password)

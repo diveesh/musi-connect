@@ -108,21 +108,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-default">
-           Activities 
-        </div>
-        <div class="panel-body panel-height-custom">
-          <% @user.activities.each do |activity| %>
-              <div><%= activity.name %></div>
-          <% end %>
-        </div>
-      </div>
-    </div>
     <div class="col-md-3" >
       <div class="panel panel-default">
-        <div class="panel-heading panel-heading-default">Interests</div>
+        <div class="panel-heading panel-heading-default">Musical Interests</div>
         <div class="panel-body panel-height-custom">
           <% @user.interests.each do |interest|%>
               <div><%= interest.name %></div>
@@ -131,6 +119,19 @@
       </div>
             
     </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">
+           Performance Support Activities 
+        </div>
+        <div class="panel-body panel-height-custom">
+          <% @user.activities.each do |activity| %>
+              <div><%= activity.name %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
         
         
         
@@ -160,6 +161,16 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading panel-heading-default">Other Interests Info</div>
+        <div class="panel-body panel-height-custom">
+          <p><%= @user.interest_info %></p> 
+        </div>
+      </div>
+            
+    </div>
     <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading panel-heading-default">
@@ -169,15 +180,6 @@
           <p><%= @user.activity_info %></p>
         </div>
       </div>
-    </div>
-    <div class="col-md-3" >
-      <div class="panel panel-default">
-        <div class="panel-heading panel-heading-default">Other Interests Info</div>
-        <div class="panel-body panel-height-custom">
-          <p><%= @user.interest_info %></p> 
-        </div>
-      </div>
-            
     </div>
         
         

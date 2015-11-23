@@ -80,4 +80,5 @@ Rails.application.configure do
   config.action_mailer.postmark_settings = { :api_key => ENV['POSTMARK_API_KEY'] }
 
   config.action_controller.asset_host = ENV['CDN_HOST']
+  config.force_ssl = true
 end

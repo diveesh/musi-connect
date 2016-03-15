@@ -15,7 +15,7 @@ function fillResultsTable(tBodyId, tableId, users) {
         var emailP = document.createElement('p');
         emailP.innerHTML = user.email_address;
         var instrumentsP = document.createElement('p');
-        instrumentsP.innerHTML = user.instruments.join(",");
+        instrumentsP.innerHTML = user.instruments.join(",") === '' ? "No Instruments Found" : user.instruments.join(",");
         instrumentsP.className = 'iffyTip wd250';
         instrumentsP.title = user.instruments.join(",");
         number.appendChild(numberP);
@@ -24,7 +24,7 @@ function fillResultsTable(tBodyId, tableId, users) {
         name.className = 'col-lg-3';
         email.appendChild(emailP);
         email.className = 'col-lg-3';
-        instruments.className = 'col-xs-5';
+        instruments.className = 'col-lg-5';
         instruments.appendChild(instrumentsP);
         row.appendChild(number);
         row.appendChild(name);
